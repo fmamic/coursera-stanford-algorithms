@@ -16,7 +16,7 @@ public class Part1Test {
     public void maximumSubarrayNaiveTest() {
         MaximumSubarray subarray = new MaximumSubarray();
 
-        int[] prices = new int[] {100, 113, 110, 85, 105, 102};
+        int[] prices = new int[]{100, 113, 110, 85, 105, 102};
 
         assertEquals(20, subarray.maximumSubarrayNaive(prices));
     }
@@ -25,7 +25,7 @@ public class Part1Test {
     public void maximumSubarrayOptimizedTest() {
         MaximumSubarray subarray = new MaximumSubarray();
 
-        int[] prices = new int[] {100, 113, 110, 85, 105, 102};
+        int[] prices = new int[]{100, 113, 110, 85, 105, 102};
 
         assertEquals(20, subarray.maximumSubarrayOptimized(prices));
     }
@@ -34,7 +34,22 @@ public class Part1Test {
     public void inversionTest1() {
         InversionNumber inversionNumber = new InversionNumber();
 
-        File file = new File(getClass().getClassLoader().getResource("inversionTestFile.txt").getFile());
+        int[] input = getData("inversionTestFile.txt");
+
+        assertEquals(inversionNumber.countInversionNumberNaive(input), inversionNumber.countInversionNumberOptimized(input));
+    }
+
+    @Test
+    public void inversionTest2() {
+        InversionNumber inversionNumber = new InversionNumber();
+
+        int[] input = getData("inversionTestFile2.txt");
+
+        assertEquals(inversionNumber.countInversionNumberNaive(input), inversionNumber.countInversionNumberOptimized(input));
+    }
+
+    private int[] getData(final String s) {
+        File file = new File(getClass().getClassLoader().getResource(s).getFile());
 
         List<Integer> list = new ArrayList<>();
 
@@ -44,8 +59,6 @@ public class Part1Test {
                 String line = scanner.nextLine();
                 list.add(Integer.parseInt(line));
             }
-
-            scanner.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +70,12 @@ public class Part1Test {
         for (Integer i : list) {
             input[number++] = i;
         }
+        return input;
+    }
 
-        inversionNumber.countInversionNumberOptimized(input);
+    @Test
+    public void inversionTest3() {
+        InversionNumber inversionNumber = new InversionNumber();
+        assertEquals(inversionNumber.countInversionNumberNaive(new int[]{1, 20, 6, 4, 5}), inversionNumber.countInversionNumberOptimized(new int[]{1, 20, 6, 4, 5}));
     }
 }
