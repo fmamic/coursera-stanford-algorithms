@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class InversionNumber {
 
+    // O(n^2) time and O(1) space
     long countInversionNumberNaive(int[] input) {
 
         long inversions = 0;
@@ -21,6 +22,7 @@ public class InversionNumber {
         return inversions;
     }
 
+    // O(nLogN) time and O(nLogN) space
     long countInversionNumberOptimized(int[] input) {
         return countInversionNumberOptimized(input, 0, input.length - 1);
     }
