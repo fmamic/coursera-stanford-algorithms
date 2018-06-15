@@ -78,4 +78,37 @@ public class Part1Test {
         InversionNumber inversionNumber = new InversionNumber();
         assertEquals(inversionNumber.countInversionNumberNaive(new int[]{1, 20, 6, 4, 5}), inversionNumber.countInversionNumberOptimized(new int[]{1, 20, 6, 4, 5}));
     }
+
+    @Test
+    public void quickSort2() {
+        QuickSort quickSort = new QuickSort();
+        int[] input = new int[] {5,4,10,11,23,4,66,89,22};
+        quickSort.sortFirstElementPivot(input, 0, input.length-1);
+        input = new int[] {5,4,10,11,23,4,66,89,22};
+        quickSort.sortLastElementPivot(input, 0, input.length-1);
+        input = new int[] {5,4,10,11,23,4,66,89,22};
+        quickSort.sortMedianPivot(input, 0, input.length-1);
+    }
+
+    @Test
+    public void quickSort10() {
+        QuickSort quickSort = new QuickSort();
+        int[] input = getData("quicksort.txt");
+        assertEquals(162085, quickSort.sortFirstElementPivot(input, 0, input.length-1));
+    }
+
+
+    @Test
+    public void quickSort11() {
+        QuickSort quickSort = new QuickSort();
+        int[] input = getData("quicksort.txt");
+        assertEquals(164123, quickSort.sortLastElementPivot(input, 0, input.length-1));
+    }
+
+    @Test
+    public void quickSort12() {
+        QuickSort quickSort = new QuickSort();
+        int[] input = getData("quicksort.txt");
+        assertEquals(138382, quickSort.sortMedianPivot(input, 0, input.length-1));
+    }
 }
