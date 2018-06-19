@@ -89,35 +89,80 @@ public class Part1Test {
     }
 
     @Test
+    public void minCutTest3() {
+        final KargerMinCut kargerMinCut = new KargerMinCut();
+
+        int result = Integer.MAX_VALUE;
+        int i = 500;
+        while (i != 0) {
+            final Graph graphData = getGraphData("kargerMinCut2");
+            int min = kargerMinCut.minCutNumber(graphData);
+            if (min < result) {
+                result = min;
+            }
+            i--;
+            System.out.println(i + " , " + result);
+        }
+        System.out.println(result);
+    }
+
+    @Test
     public void minCutTest() {
         final KargerMinCut kargerMinCut = new KargerMinCut();
-        final Graph graphData = getGraphData("kargerMinCut.txt");
-        kargerMinCut.minCutNumber(graphData);
+
+        int result = Integer.MAX_VALUE;
+        int i = 200;
+        while (i != 0) {
+            final Graph graphData = getGraphData("kargerMinCut.txt");
+            int min = kargerMinCut.minCutNumber(graphData);
+            if (min < result) {
+                result = min;
+            }
+            i--;
+            System.out.println(i + " , " + result);
+        }
+        System.out.println(result);
     }
 
     @Test
     public void minCutTest2() {
-        final Graph graph = new Graph();
-
-        Graph.Vertex v1 = new Graph.Vertex(1);
-        Graph.Vertex v2 = new Graph.Vertex(2);
-        Graph.Vertex v3 = new Graph.Vertex(3);
-        Graph.Vertex v4 = new Graph.Vertex(4);
-
-        graph.addVertex(v1);
-        graph.addVertex(v2);
-        graph.addVertex(v3);
-        graph.addVertex(v4);
-
-        graph.addEdge(v1, v2);
-        graph.addEdge(v1, v4);
-        graph.addEdge(v1, v3);
-        graph.addEdge(v2, v4);
-        graph.addEdge(v3, v4);
 
         final KargerMinCut kargerMinCut = new KargerMinCut();
 
-        assertEquals(2, kargerMinCut.minCutNumber(graph));
+        int result = Integer.MAX_VALUE;
+        int i = 10;
+        while (i != 0) {
+
+            final Graph graph = new Graph();
+
+            Graph.Vertex v1 = new Graph.Vertex(1);
+            Graph.Vertex v2 = new Graph.Vertex(2);
+            Graph.Vertex v3 = new Graph.Vertex(3);
+            Graph.Vertex v4 = new Graph.Vertex(4);
+            Graph.Vertex v5 = new Graph.Vertex(5);
+
+            graph.addVertex(v1);
+            graph.addVertex(v2);
+            graph.addVertex(v3);
+            graph.addVertex(v4);
+            graph.addVertex(v5);
+
+            graph.addEdge(v1, v2);
+            graph.addEdge(v1, v4);
+            graph.addEdge(v1, v3);
+            graph.addEdge(v3, v2);
+            graph.addEdge(v3, v4);
+            graph.addEdge(v5, v1);
+            graph.addEdge(v5, v2);
+
+            int min = kargerMinCut.minCutNumber(graph);
+            if (min < result) {
+                result = min;
+            }
+            i--;
+            System.out.println(i + " , " + result);
+        }
+        System.out.println(result);
     }
 
     private Graph getGraphData(final String s) {
@@ -129,7 +174,10 @@ public class Part1Test {
 
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
-                final String[] vertices = line.split("\t");
+                String[] vertices = line.split("\t");
+
+                if (vertices.length == 1)
+                    vertices = line.split(" ");
 
                 final Graph.Vertex vertex;
                 final Integer mainValue = Integer.valueOf(vertices[0]);
@@ -144,11 +192,16 @@ public class Part1Test {
                 for (int i = 1; i < vertices.length; i++) {
                     final Integer value = Integer.valueOf(vertices[i]);
                     if (graph.contains(value)) {
-                        graph.addEdge(vertex, graph.getVertex(value));
+
+                        if (!graph.containsEdge(vertex, graph.getVertex(value)))
+                            graph.addEdge(vertex, graph.getVertex(value));
+
                     } else {
                         final Graph.Vertex newVertex = new Graph.Vertex(value);
                         graph.addVertex(newVertex);
-                        graph.addEdge(vertex, newVertex);
+
+                        if (!graph.containsEdge(vertex, newVertex))
+                          graph.addEdge(vertex, newVertex);
                     }
                 }
             }

@@ -30,6 +30,22 @@ public class Graph {
         edges.add(new Edge(vertex1, vertex2));
     }
 
+    public boolean containsEdge(final Vertex v1, final Vertex v2) {
+
+        for (final Edge edge : edges) {
+
+            if (edge.getSource().getValue().equals(v1.value) && edge.getDestination().getValue().equals(v2.value)) {
+                return true;
+            }
+
+            if (edge.getSource().getValue().equals(v2.value) && edge.getDestination().getValue().equals(v1.value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean contains(final Integer vertex) {
         for (final Vertex vertex1 : vertices) {
             if (vertex1.getValue().equals(vertex))
@@ -72,6 +88,15 @@ public class Graph {
         public void setDestination(final Vertex destination) {
             this.destination = destination;
         }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder("Edge{");
+            sb.append("source=").append(source);
+            sb.append(", destination=").append(destination);
+            sb.append('}');
+            return sb.toString();
+        }
     }
 
     public static class Vertex {
@@ -105,6 +130,14 @@ public class Graph {
         @Override
         public int hashCode() {
             return value != null ? value.hashCode() : 0;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder sb = new StringBuilder("Vertex{");
+            sb.append("value=").append(value);
+            sb.append('}');
+            return sb.toString();
         }
     }
 }
