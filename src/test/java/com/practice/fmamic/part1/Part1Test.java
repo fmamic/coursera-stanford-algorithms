@@ -88,8 +88,28 @@ public class Part1Test {
         assertEquals(138382, quickSort.sortMedianPivot(input, 0, input.length-1));
     }
 
+
     @Test
-    public void minCutTest3() {
+    public void minCutUnionFindTest1() {
+        final KargerMinCut kargerMinCut = new KargerMinCut();
+
+        int result = Integer.MAX_VALUE;
+        int i = 500;
+        final Graph graphData = getGraphData("kargerMinCut2");
+
+        while (i != 0) {
+            int min = kargerMinCut.minCutNumberUnionFind(graphData);
+            if (min < result) {
+                result = min;
+            }
+            i--;
+            System.out.println(i + " , " + result);
+        }
+        assertEquals(3, result);
+    }
+
+    @Test
+    public void minCutNaiveTest1() {
         final KargerMinCut kargerMinCut = new KargerMinCut();
 
         int result = Integer.MAX_VALUE;
@@ -103,11 +123,11 @@ public class Part1Test {
             i--;
             System.out.println(i + " , " + result);
         }
-        System.out.println(result);
+        assertEquals(3, result);
     }
 
     @Test
-    public void minCutTest() {
+    public void minCutNaiveTest2() {
         final KargerMinCut kargerMinCut = new KargerMinCut();
 
         int result = Integer.MAX_VALUE;
@@ -121,48 +141,26 @@ public class Part1Test {
             i--;
             System.out.println(i + " , " + result);
         }
-        System.out.println(result);
+        assertEquals(17, result);
     }
 
     @Test
-    public void minCutTest2() {
-
+    public void minCutUnionFindTest2() {
         final KargerMinCut kargerMinCut = new KargerMinCut();
 
         int result = Integer.MAX_VALUE;
-        int i = 10;
+        int i = 200;
+        final Graph graphData = getGraphData("kargerMinCut.txt");
+
         while (i != 0) {
-
-            final Graph graph = new Graph();
-
-            Graph.Vertex v1 = new Graph.Vertex(1);
-            Graph.Vertex v2 = new Graph.Vertex(2);
-            Graph.Vertex v3 = new Graph.Vertex(3);
-            Graph.Vertex v4 = new Graph.Vertex(4);
-            Graph.Vertex v5 = new Graph.Vertex(5);
-
-            graph.addVertex(v1);
-            graph.addVertex(v2);
-            graph.addVertex(v3);
-            graph.addVertex(v4);
-            graph.addVertex(v5);
-
-            graph.addEdge(v1, v2);
-            graph.addEdge(v1, v4);
-            graph.addEdge(v1, v3);
-            graph.addEdge(v3, v2);
-            graph.addEdge(v3, v4);
-            graph.addEdge(v5, v1);
-            graph.addEdge(v5, v2);
-
-            int min = kargerMinCut.minCutNumber(graph);
+            int min = kargerMinCut.minCutNumberUnionFind(graphData);
             if (min < result) {
                 result = min;
             }
             i--;
             System.out.println(i + " , " + result);
         }
-        System.out.println(result);
+        assertEquals(17, result);
     }
 
     private Graph getGraphData(final String s) {
