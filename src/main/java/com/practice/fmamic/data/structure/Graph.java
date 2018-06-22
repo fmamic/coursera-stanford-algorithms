@@ -19,6 +19,10 @@ public class Graph {
         return this.vertices;
     }
 
+    public void setVertices(final Set<Vertex> vertices) {
+        this.vertices = vertices;
+    }
+
     public void addVertex(final Vertex vertex) {
         vertices.add(vertex);
     }
@@ -27,6 +31,11 @@ public class Graph {
         vertex1.adjacencyList.add(vertex2);
         vertex2.adjacencyList.add(vertex1);
 
+        edges.add(new Edge(vertex1, vertex2));
+    }
+
+    public void addEdgeDirected(final Vertex vertex1, final Vertex vertex2) {
+        vertex1.adjacencyList.add(vertex2);
         edges.add(new Edge(vertex1, vertex2));
     }
 
@@ -103,6 +112,8 @@ public class Graph {
 
         private Integer value;
 
+        private Integer finish;
+
         private List<Vertex> adjacencyList = new ArrayList<>();
 
         public Vertex(final Integer value) {
@@ -115,6 +126,10 @@ public class Graph {
 
         public Integer getValue() {
             return value;
+        }
+
+        public void setValue(final Integer value) {
+            this.value = value;
         }
 
         @Override
@@ -138,6 +153,14 @@ public class Graph {
             sb.append("value=").append(value);
             sb.append('}');
             return sb.toString();
+        }
+
+        public Integer getFinish() {
+            return finish;
+        }
+
+        public void setFinish(final Integer finish) {
+            this.finish = finish;
         }
     }
 }

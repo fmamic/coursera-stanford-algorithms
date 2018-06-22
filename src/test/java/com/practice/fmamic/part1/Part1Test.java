@@ -163,6 +163,46 @@ public class Part1Test {
         assertEquals(17, result);
     }
 
+    @Test
+    public void kosarajuTest() {
+        final Graph graph = new Graph();
+
+        Graph.Vertex v1 = new Graph.Vertex(1);
+        Graph.Vertex v2 = new Graph.Vertex(2);
+        Graph.Vertex v3 = new Graph.Vertex(3);
+        Graph.Vertex v4 = new Graph.Vertex(4);
+        Graph.Vertex v5 = new Graph.Vertex(5);
+        Graph.Vertex v6 = new Graph.Vertex(6);
+        Graph.Vertex v7 = new Graph.Vertex(7);
+        Graph.Vertex v8 = new Graph.Vertex(8);
+        Graph.Vertex v9 = new Graph.Vertex(9);
+
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+        graph.addVertex(v3);
+        graph.addVertex(v4);
+        graph.addVertex(v5);
+        graph.addVertex(v6);
+        graph.addVertex(v7);
+        graph.addVertex(v8);
+        graph.addVertex(v9);
+
+        graph.addEdgeDirected(v4, v1);
+        graph.addEdgeDirected(v1, v7);
+        graph.addEdgeDirected(v7, v4);
+        graph.addEdgeDirected(v7, v9);
+        graph.addEdgeDirected(v9, v6);
+        graph.addEdgeDirected(v3, v9);
+        graph.addEdgeDirected(v6, v8);
+        graph.addEdgeDirected(v6, v3);
+        graph.addEdgeDirected(v8, v2);
+        graph.addEdgeDirected(v2, v5);
+        graph.addEdgeDirected(v5, v8);
+
+        KosarajuSCC kosarajuSCC = new KosarajuSCC();
+        assertEquals(11, kosarajuSCC.calculate(graph));
+    }
+
     private Graph getGraphData(final String s) {
         File file = new File(getClass().getClassLoader().getResource(s).getFile());
 
