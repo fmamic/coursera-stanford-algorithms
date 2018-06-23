@@ -1,30 +1,23 @@
 package com.practice.fmamic.data.structure;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 // Undirected Graph with unique Vertex values
 public class Graph {
 
-    private Set<Vertex> vertices = new HashSet<>();
+    private Map<Integer, Vertex> vertices = new TreeMap<>();
     private List<Edge> edges = new ArrayList<>();
 
     public List<Edge> getEdges() {
         return this.edges;
     }
 
-    public Set<Vertex> getVertices() {
-        return this.vertices;
-    }
-
-    public void setVertices(final Set<Vertex> vertices) {
-        this.vertices = vertices;
+    public Collection<Vertex> getVertices() {
+        return this.vertices.values();
     }
 
     public void addVertex(final Vertex vertex) {
-        vertices.add(vertex);
+        vertices.put(vertex.getValue(), vertex);
     }
 
     public void addEdge(final Vertex vertex1, final Vertex vertex2) {
@@ -56,19 +49,11 @@ public class Graph {
     }
 
     public boolean contains(final Integer vertex) {
-        for (final Vertex vertex1 : vertices) {
-            if (vertex1.getValue().equals(vertex))
-                return true;
-        }
-        return false;
+        return vertices.containsKey(vertex);
     }
 
     public Vertex getVertex(final Integer value) {
-        for (final Vertex vertex : vertices) {
-            if (vertex.value.equals(value))
-                return vertex;
-        }
-        return new Vertex(value);
+        return vertices.get(value);
     }
 
     public static class Edge {
@@ -108,7 +93,7 @@ public class Graph {
         }
     }
 
-    public static class Vertex {
+    public static class Vertex implements Comparable<Vertex> {
 
         private Integer value;
 
@@ -153,6 +138,10 @@ public class Graph {
             sb.append("value=").append(value);
             sb.append('}');
             return sb.toString();
+        }
+
+        public int compareTo(final Vertex vertex) {
+            return this.getValue().compareTo(vertex.getValue());
         }
 
         public Integer getFinish() {

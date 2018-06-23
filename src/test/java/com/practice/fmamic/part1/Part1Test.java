@@ -7,9 +7,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Part1Test {
 
@@ -200,7 +198,60 @@ public class Part1Test {
         graph.addEdgeDirected(v5, v8);
 
         KosarajuSCC kosarajuSCC = new KosarajuSCC();
-        assertEquals(11, kosarajuSCC.calculate(graph));
+        assertEquals(3, kosarajuSCC.calculate(graph));
+    }
+
+    @Test
+    public void kosarajuTest2() {
+        final Graph  graph = getDirectedGraphData("scc.txt");
+        KosarajuSCC kosarajuSCC = new KosarajuSCC();
+        assertEquals(371762, kosarajuSCC.calculate(graph));
+    }
+
+
+    private Graph getDirectedGraphData(final String s) {
+        File file = new File(getClass().getClassLoader().getResource(s).getFile());
+
+        final Graph graph = new Graph();
+        final Map<Integer, Graph.Vertex> map = new HashMap<>();
+
+
+        try (Scanner scanner = new Scanner(file)) {
+
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+                String[] vertices = line.split(" ");
+
+                final Graph.Vertex vertexSource;
+                final Graph.Vertex vertexDestination;
+
+                final Integer destination = Integer.valueOf(vertices[0]);
+                final Integer source = Integer.valueOf(vertices[1]);
+
+                if (!map.containsKey(source)) {
+                    vertexSource = new Graph.Vertex(source);
+                    graph.addVertex(vertexSource);
+                    map.put(source, vertexSource);
+                } else {
+                    vertexSource = map.get(source);
+                }
+
+                if (!map.containsKey(destination)) {
+                    vertexDestination = new Graph.Vertex(destination);
+                    graph.addVertex(vertexDestination);
+                    map.put(destination, vertexDestination);
+                } else {
+                    vertexDestination = map.get(destination);
+                }
+
+                graph.addEdgeDirected(vertexDestination, vertexSource);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return graph;
     }
 
     private Graph getGraphData(final String s) {
