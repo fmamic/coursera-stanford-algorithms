@@ -1,6 +1,7 @@
 package com.practice.fmamic.part2;
 
 import com.practice.fmamic.data.structure.Graph;
+import com.practice.fmamic.data.structure.MapPriorityQueue;
 import org.junit.Test;
 
 import java.io.File;
@@ -12,6 +13,36 @@ import java.util.Scanner;
 import static junit.framework.TestCase.assertEquals;
 
 public class Part2Test {
+
+    @Test
+    public void mapQueueTest() {
+
+        MapPriorityQueue mapQueue = new MapPriorityQueue();
+
+        mapQueue.add(new MapPriorityQueue.Item("a", 6));
+        mapQueue.add(new MapPriorityQueue.Item("b", 2));
+        mapQueue.add(new MapPriorityQueue.Item("c", 7));
+        mapQueue.add(new MapPriorityQueue.Item("d", 5));
+        mapQueue.add(new MapPriorityQueue.Item("e", 4));
+        mapQueue.add(new MapPriorityQueue.Item("f", 1));
+        mapQueue.add(new MapPriorityQueue.Item("g", 3));
+
+        assertEquals(true, mapQueue.contains("a"));
+        assertEquals(true, mapQueue.contains("b"));
+        assertEquals(true, mapQueue.contains("c"));
+        assertEquals(false, mapQueue.contains("sdad"));
+        assertEquals(false, mapQueue.contains("ada"));
+
+        mapQueue.decrease("f");
+
+        assertEquals(0, (int) mapQueue.extractMin().getValue());
+        assertEquals(2, (int) mapQueue.extractMin().getValue());
+        assertEquals(3, (int) mapQueue.extractMin().getValue());
+        assertEquals(4, (int) mapQueue.extractMin().getValue());
+        assertEquals(5, (int) mapQueue.extractMin().getValue());
+        assertEquals(6, (int) mapQueue.extractMin().getValue());
+        assertEquals(7, (int) mapQueue.extractMin().getValue());
+    }
 
     @Test
     public void kosarajuTest() {
