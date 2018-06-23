@@ -1,4 +1,4 @@
-package com.practice.fmamic.part1;
+package com.practice.fmamic.part2;
 
 import java.util.*;
 
