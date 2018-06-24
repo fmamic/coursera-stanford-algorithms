@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
 
 public class Part2Test {
 
@@ -89,6 +90,88 @@ public class Part2Test {
         final Graph  graph = getDirectedGraphData("scc.txt");
         KosarajuSCC kosarajuSCC = new KosarajuSCC();
         assertEquals(371762, kosarajuSCC.calculate(graph));
+    }
+
+    @Test
+    public void dijkstraTest1() {
+        final Graph graph = getDijkstraGraphData("dijkstra.txt");
+        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath();
+
+        assertNotNull(dijkstraShortestPath.calculate(graph));
+    }
+
+    @Test
+    public void dijkstraTest2() {
+
+        final Graph graph = new Graph();
+
+        Graph.Vertex v1 = new Graph.Vertex(1);
+        Graph.Vertex v2 = new Graph.Vertex(2);
+        Graph.Vertex v3 = new Graph.Vertex(3);
+        Graph.Vertex v4 = new Graph.Vertex(4);
+
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+        graph.addVertex(v3);
+        graph.addVertex(v4);
+
+        graph.addEdge(v1, v2, 1);
+        graph.addEdge(v2, v4, 6);
+        graph.addEdge(v2, v3, 2);
+        graph.addEdge(v1, v3, 4);
+        graph.addEdge(v3, v4, 3);
+
+        final DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath();
+
+        assertNotNull(dijkstraShortestPath.calculate(graph));
+    }
+
+    private Graph getDijkstraGraphData(final String s) {
+        File file = new File(getClass().getClassLoader().getResource(s).getFile());
+
+        final Graph graph = new Graph();
+
+        try (Scanner scanner = new Scanner(file)) {
+
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+
+                String[] split1 = line.split("\t");
+
+                final Graph.Vertex source;
+
+                if (!graph.contains(Integer.valueOf(split1[0]))) {
+                    source = new Graph.Vertex(Integer.valueOf(split1[0]));
+                } else {
+                    source = graph.getVertex(Integer.valueOf(split1[0]));
+                }
+
+                graph.addVertex(source);
+
+                for (int i = 1; i < split1.length; i++) {
+                    String[] edgeData = split1[i].split(",");
+
+                    Integer weight = Integer.valueOf(edgeData[1]);
+                    Integer key = Integer.valueOf(edgeData[0]);
+
+                    Graph.Vertex destination;
+
+                    if (!graph.contains(key)) {
+                        destination = new Graph.Vertex(key);
+                    } else {
+                        destination = graph.getVertex(key);
+                    }
+
+                    graph.addEdge(source, destination, weight);
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return graph;
     }
 
     private Graph getDirectedGraphData(final String s) {

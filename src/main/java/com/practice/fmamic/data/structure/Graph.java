@@ -27,6 +27,14 @@ public class Graph {
         edges.add(new Edge(vertex1, vertex2));
     }
 
+
+    public void addEdge(final Vertex vertex1, final Vertex vertex2, final Integer weight) {
+        vertex1.adjacencyList.add(vertex2);
+        vertex2.adjacencyList.add(vertex1);
+
+        edges.add(new Edge(vertex1, vertex2, weight));
+    }
+
     public void addEdgeDirected(final Vertex vertex1, final Vertex vertex2) {
         vertex1.adjacencyList.add(vertex2);
         edges.add(new Edge(vertex1, vertex2));
@@ -62,9 +70,17 @@ public class Graph {
 
         private Vertex destination;
 
+        private Integer weight;
+
         public Edge(final Vertex source, final Vertex destination) {
             this.source = source;
             this.destination = destination;
+        }
+
+        public Edge(final Vertex source, final Vertex destination, final Integer weight) {
+            this.source = source;
+            this.destination = destination;
+            this.weight = weight;
         }
 
         public Vertex getSource() {
@@ -90,6 +106,14 @@ public class Graph {
             sb.append(", destination=").append(destination);
             sb.append('}');
             return sb.toString();
+        }
+
+        public Integer getWeight() {
+            return weight;
+        }
+
+        public void setWeight(Integer weight) {
+            this.weight = weight;
         }
     }
 
