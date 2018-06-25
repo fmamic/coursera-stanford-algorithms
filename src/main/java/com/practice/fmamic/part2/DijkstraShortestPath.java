@@ -1,48 +1,43 @@
 package com.practice.fmamic.part2;
 
+import com.practice.fmamic.data.structure.Edge;
 import com.practice.fmamic.data.structure.Graph;
+import com.practice.fmamic.data.structure.Vertex;
 
 import java.util.*;
 
-public class DijkstraShortestPath {
+class DijkstraShortestPath {
 
-    public List<Integer> calculate(final Graph graph) {
+    Map<Integer, Integer> calculate(final Graph graph) {
 
-        final List<Integer> result = new ArrayList<>();
-        final Queue<Graph.Vertex> queue = new LinkedList<>();
+        final Map<Integer, Integer> result = new HashMap<>();
+        final List<Vertex> vertices = graph.getVertices();
 
-        queue.offer((Graph.Vertex) graph.getVertices().toArray()[0]);
+        vertices.get(0).setDistance(0);
 
-        final Map<Graph.Vertex, Integer> map = new HashMap<>();
+        while (!vertices.isEmpty()) {
 
-        int i = 0;
-        for (Graph.Vertex vertex : graph.getVertices()) {
-            if (i == 0) {
-                map.put(vertex, 0);
-            } else {
-                map.put(vertex, Integer.MAX_VALUE);
-            }
-            i++;
-        }
+            Collections.sort(vertices, new Comparator<Vertex>() {
+                @Override
+                public int compare(final Vertex o1, final Vertex o2) {
+                    return o1.getDistance().compareTo(o2.getDistance());
+                }
+            });
 
-        while (!queue.isEmpty()) {
+            Vertex vertex = vertices.get(0);
+            vertices.remove(vertex);
 
-            Graph.Vertex vertex = queue.poll();
+            for (final Edge edge : graph.getEdges()) {
+                if (edge.getSource().equals(vertex)) {
+                    final Integer potential = vertex.getDistance() + edge.getWeight();
+                    final Integer current = edge.getDestination().getDistance();
 
-            for (final Graph.Vertex adjacency : vertex.getAdjacencyList()) {
-                queue.offer(adjacency);
-            }
-
-            for (final Graph.Edge edge : graph.getEdges()) {
-                if (edge.getDestination() == vertex) {
-                    final Integer potential = map.get(edge.getSource()) + edge.getWeight();
-                    final Integer value = map.get(vertex);
-
-                    if (potential < value) {
-                        map.put(vertex, potential);
+                    if (potential < current) {
+                        edge.getDestination().setDistance(potential);
                     }
                 }
             }
+            result.put(vertex.getValue(), vertex.getDistance());
         }
 
         return result;

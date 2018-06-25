@@ -1,7 +1,9 @@
 package com.practice.fmamic.part2;
 
+import static junit.framework.TestCase.*;
+
 import com.practice.fmamic.data.structure.Graph;
-import com.practice.fmamic.data.structure.MapPriorityQueue;
+import com.practice.fmamic.data.structure.Vertex;
 import org.junit.Test;
 
 import java.io.File;
@@ -10,54 +12,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
-
 public class Part2Test {
-
-    @Test
-    public void mapQueueTest() {
-
-        MapPriorityQueue mapQueue = new MapPriorityQueue();
-
-        mapQueue.add(new MapPriorityQueue.Item("a", 6));
-        mapQueue.add(new MapPriorityQueue.Item("b", 2));
-        mapQueue.add(new MapPriorityQueue.Item("c", 7));
-        mapQueue.add(new MapPriorityQueue.Item("d", 5));
-        mapQueue.add(new MapPriorityQueue.Item("e", 4));
-        mapQueue.add(new MapPriorityQueue.Item("f", 1));
-        mapQueue.add(new MapPriorityQueue.Item("g", 3));
-
-        assertEquals(true, mapQueue.contains("a"));
-        assertEquals(true, mapQueue.contains("b"));
-        assertEquals(true, mapQueue.contains("c"));
-        assertEquals(false, mapQueue.contains("sdad"));
-        assertEquals(false, mapQueue.contains("ada"));
-
-        mapQueue.decrease("f");
-
-        assertEquals(0, (int) mapQueue.extractMin().getValue());
-        assertEquals(2, (int) mapQueue.extractMin().getValue());
-        assertEquals(3, (int) mapQueue.extractMin().getValue());
-        assertEquals(4, (int) mapQueue.extractMin().getValue());
-        assertEquals(5, (int) mapQueue.extractMin().getValue());
-        assertEquals(6, (int) mapQueue.extractMin().getValue());
-        assertEquals(7, (int) mapQueue.extractMin().getValue());
-    }
 
     @Test
     public void kosarajuTest() {
         final Graph graph = new Graph();
 
-        Graph.Vertex v1 = new Graph.Vertex(1);
-        Graph.Vertex v2 = new Graph.Vertex(2);
-        Graph.Vertex v3 = new Graph.Vertex(3);
-        Graph.Vertex v4 = new Graph.Vertex(4);
-        Graph.Vertex v5 = new Graph.Vertex(5);
-        Graph.Vertex v6 = new Graph.Vertex(6);
-        Graph.Vertex v7 = new Graph.Vertex(7);
-        Graph.Vertex v8 = new Graph.Vertex(8);
-        Graph.Vertex v9 = new Graph.Vertex(9);
+        Vertex v1 = new Vertex(1);
+        Vertex v2 = new Vertex(2);
+        Vertex v3 = new Vertex(3);
+        Vertex v4 = new Vertex(4);
+        Vertex v5 = new Vertex(5);
+        Vertex v6 = new Vertex(6);
+        Vertex v7 = new Vertex(7);
+        Vertex v8 = new Vertex(8);
+        Vertex v9 = new Vertex(9);
 
         graph.addVertex(v1);
         graph.addVertex(v2);
@@ -105,10 +74,10 @@ public class Part2Test {
 
         final Graph graph = new Graph();
 
-        Graph.Vertex v1 = new Graph.Vertex(1);
-        Graph.Vertex v2 = new Graph.Vertex(2);
-        Graph.Vertex v3 = new Graph.Vertex(3);
-        Graph.Vertex v4 = new Graph.Vertex(4);
+        Vertex v1 = new Vertex(1);
+        Vertex v2 = new Vertex(2);
+        Vertex v3 = new Vertex(3);
+        Vertex v4 = new Vertex(4);
 
         graph.addVertex(v1);
         graph.addVertex(v2);
@@ -120,6 +89,51 @@ public class Part2Test {
         graph.addEdge(v2, v3, 2);
         graph.addEdge(v1, v3, 4);
         graph.addEdge(v3, v4, 3);
+
+        final DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath();
+
+        assertNotNull(dijkstraShortestPath.calculate(graph));
+    }
+
+    @Test
+    public void dijkstraTest3() {
+
+        final Graph graph = new Graph();
+
+        Vertex v0 = new Vertex(0);
+        Vertex v1 = new Vertex(1);
+        Vertex v2 = new Vertex(2);
+        Vertex v3 = new Vertex(3);
+        Vertex v4 = new Vertex(4);
+        Vertex v5 = new Vertex(5);
+        Vertex v6 = new Vertex(6);
+        Vertex v7 = new Vertex(7);
+        Vertex v8 = new Vertex(8);
+
+        graph.addVertex(v0);
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+        graph.addVertex(v3);
+        graph.addVertex(v4);
+        graph.addVertex(v5);
+        graph.addVertex(v6);
+        graph.addVertex(v7);
+        graph.addVertex(v8);
+
+        graph.addEdge(v0, v1, 4);
+        graph.addEdge(v0, v7, 8);
+        graph.addEdge(v1, v7, 11);
+        graph.addEdge(v1, v2, 8);
+        graph.addEdge(v2, v8, 2);
+        graph.addEdge(v2, v3, 7);
+        graph.addEdge(v7, v8, 7);
+        graph.addEdge(v7, v6, 1);
+        graph.addEdge(v6, v5, 2);
+        graph.addEdge(v2, v5, 4);
+        graph.addEdge(v8, v6, 6);
+        graph.addEdge(v3, v5, 14);
+        graph.addEdge(v3, v4, 9);
+        graph.addEdge(v5, v4, 10);
 
         final DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath();
 
@@ -138,10 +152,10 @@ public class Part2Test {
 
                 String[] split1 = line.split("\t");
 
-                final Graph.Vertex source;
+                final Vertex source;
 
                 if (!graph.contains(Integer.valueOf(split1[0]))) {
-                    source = new Graph.Vertex(Integer.valueOf(split1[0]));
+                    source = new Vertex(Integer.valueOf(split1[0]));
                 } else {
                     source = graph.getVertex(Integer.valueOf(split1[0]));
                 }
@@ -154,13 +168,15 @@ public class Part2Test {
                     Integer weight = Integer.valueOf(edgeData[1]);
                     Integer key = Integer.valueOf(edgeData[0]);
 
-                    Graph.Vertex destination;
+                    Vertex destination;
 
                     if (!graph.contains(key)) {
-                        destination = new Graph.Vertex(key);
+                        destination = new Vertex(key);
                     } else {
                         destination = graph.getVertex(key);
                     }
+
+                    graph.addVertex(destination);
 
                     graph.addEdge(source, destination, weight);
                 }
@@ -178,7 +194,7 @@ public class Part2Test {
         File file = new File(getClass().getClassLoader().getResource(s).getFile());
 
         final Graph graph = new Graph();
-        final Map<Integer, Graph.Vertex> map = new HashMap<>();
+        final Map<Integer, Vertex> map = new HashMap<>();
 
 
         try (Scanner scanner = new Scanner(file)) {
@@ -187,14 +203,14 @@ public class Part2Test {
                 final String line = scanner.nextLine();
                 String[] vertices = line.split(" ");
 
-                final Graph.Vertex vertexSource;
-                final Graph.Vertex vertexDestination;
+                final Vertex vertexSource;
+                final Vertex vertexDestination;
 
                 final Integer destination = Integer.valueOf(vertices[0]);
                 final Integer source = Integer.valueOf(vertices[1]);
 
                 if (!map.containsKey(source)) {
-                    vertexSource = new Graph.Vertex(source);
+                    vertexSource = new Vertex(source);
                     graph.addVertex(vertexSource);
                     map.put(source, vertexSource);
                 } else {
@@ -202,7 +218,7 @@ public class Part2Test {
                 }
 
                 if (!map.containsKey(destination)) {
-                    vertexDestination = new Graph.Vertex(destination);
+                    vertexDestination = new Vertex(destination);
                     graph.addVertex(vertexDestination);
                     map.put(destination, vertexDestination);
                 } else {

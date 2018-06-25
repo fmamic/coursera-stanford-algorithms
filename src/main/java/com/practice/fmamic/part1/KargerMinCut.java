@@ -2,13 +2,14 @@ package com.practice.fmamic.part1;
 
 import java.util.*;
 
+import com.practice.fmamic.data.structure.Edge;
 import com.practice.fmamic.data.structure.Graph;
 
 class KargerMinCut {
 
     int minCutNumber(final Graph graph) {
 
-        final List<Graph.Edge> edges = graph.getEdges();
+        final List<Edge> edges = graph.getEdges();
 
         int graphSize = graph.getVertices().size();
 
@@ -17,10 +18,10 @@ class KargerMinCut {
             final Random rand = new Random();
             final int position = rand.nextInt(edges.size());
 
-            final Graph.Edge edge = edges.get(position);
+            final Edge edge = edges.get(position);
             edges.remove(edge);
 
-            for (Graph.Edge edge1 : edges) {
+            for (Edge edge1 : edges) {
 
                 if (edge.getDestination().getValue().equals(edge1.getSource().getValue())) {
                     edge1.setSource(edge.getSource());
@@ -31,11 +32,11 @@ class KargerMinCut {
                 }
             }
 
-            Iterator<Graph.Edge> iterator = edges.iterator();
+            Iterator<Edge> iterator = edges.iterator();
 
             //remove self pointing edges
             while (iterator.hasNext()) {
-                final Graph.Edge edge1 = iterator.next();
+                final Edge edge1 = iterator.next();
                 if (edge1.getDestination().equals(edge1.getSource()))
                     iterator.remove();
             }
@@ -56,7 +57,7 @@ class KargerMinCut {
             subsets[i].rank = 0;
         }
 
-        final List<Graph.Edge> edges = graph.getEdges();
+        final List<Edge> edges = graph.getEdges();
 
         int vertices = graph.getVertices().size();
 
@@ -65,7 +66,7 @@ class KargerMinCut {
             final Random rand = new Random();
             final int position = rand.nextInt(edges.size());
 
-            final Graph.Edge edge = edges.get(position);
+            final Edge edge = edges.get(position);
 
             int subset1 = find(subsets, edge.getSource().getValue() - 1);
             int subset2 = find(subsets, edge.getDestination().getValue() - 1);
@@ -80,7 +81,7 @@ class KargerMinCut {
 
         int result = 0;
 
-        for (Graph.Edge edge : graph.getEdges()) {
+        for (Edge edge : graph.getEdges()) {
             int subset1 = find(subsets, edge.getDestination().getValue() - 1);
             int subset2 = find(subsets, edge.getSource().getValue() - 1);
 

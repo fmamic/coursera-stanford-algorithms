@@ -2,7 +2,9 @@ package com.practice.fmamic.part2;
 
 import java.util.*;
 
+import com.practice.fmamic.data.structure.Edge;
 import com.practice.fmamic.data.structure.Graph;
+import com.practice.fmamic.data.structure.Vertex;
 
 class KosarajuSCC {
 
@@ -10,9 +12,9 @@ class KosarajuSCC {
 
     int calculate(final Graph reverseGraph) {
 
-        Set<Graph.Vertex> visited = new HashSet<>();
+        Set<Vertex> visited = new HashSet<>();
         for (int i = reverseGraph.getVertices().size(); i > 0; i--) {
-            final Graph.Vertex vertex = reverseGraph.getVertex(i);
+            final Vertex vertex = reverseGraph.getVertex(i);
 
             if (!visited.contains(vertex))
                 dfs(vertex, visited);
@@ -20,13 +22,13 @@ class KosarajuSCC {
 
         final Graph graphUpdated = new Graph();
 
-        for (final Graph.Vertex vertex : reverseGraph.getVertices()) {
-            graphUpdated.addVertex(new Graph.Vertex(vertex.getFinish()));
+        for (final Vertex vertex : reverseGraph.getVertices()) {
+            graphUpdated.addVertex(new Vertex(vertex.getFinish()));
         }
 
-        for (final Graph.Edge edge : reverseGraph.getEdges()) {
-            final Graph.Vertex source = graphUpdated.getVertex(edge.getSource().getFinish());
-            final Graph.Vertex destination = graphUpdated.getVertex(edge.getDestination().getFinish());
+        for (final Edge edge : reverseGraph.getEdges()) {
+            final Vertex source = graphUpdated.getVertex(edge.getSource().getFinish());
+            final Vertex destination = graphUpdated.getVertex(edge.getDestination().getFinish());
 
             graphUpdated.addEdgeDirected(destination, source);
         }
@@ -36,7 +38,7 @@ class KosarajuSCC {
         List<Integer> largest = new ArrayList<>();
         int last = 0;
         for (int i = graphUpdated.getVertices().size(); i > 0; i--) {
-            final Graph.Vertex vertex = graphUpdated.getVertex(i);
+            final Vertex vertex = graphUpdated.getVertex(i);
 
             if (!visited.contains(vertex)) {
                 dfs(vertex, visited);
@@ -56,7 +58,7 @@ class KosarajuSCC {
         return total;
     }
 
-    private void dfs(final Graph.Vertex vertex, Set<Graph.Vertex> visited) {
+    private void dfs(final Vertex vertex, Set<Vertex> visited) {
 
         if (vertex == null) {
             return;
@@ -64,7 +66,7 @@ class KosarajuSCC {
 
         visited.add(vertex);
 
-        for (final Graph.Vertex adjacent : vertex.getAdjacencyList()) {
+        for (final Vertex adjacent : vertex.getAdjacencyList()) {
             if (!visited.contains(adjacent)) {
                 dfs(adjacent, visited);
             }
@@ -72,21 +74,6 @@ class KosarajuSCC {
 
         vertex.setFinish(finishTime);
         finishTime++;
-    }
-
-    private Graph reverseGraph(final Graph graph) {
-        final Graph reversedGraph = new Graph();
-
-        for (final Graph.Vertex vertex : graph.getVertices()) {
-            reversedGraph.getVertices().add(new Graph.Vertex(vertex.getValue()));
-        }
-
-
-        for (final Graph.Edge edge : graph.getEdges()) {
-            reversedGraph.addEdgeDirected(reversedGraph.getVertex(edge.getDestination().getValue()), reversedGraph.getVertex(edge.getSource().getValue()));
-        }
-
-        return reversedGraph;
     }
 
 }

@@ -3,6 +3,7 @@ package com.practice.fmamic.part1;
 import static junit.framework.TestCase.assertEquals;
 
 import com.practice.fmamic.data.structure.Graph;
+import com.practice.fmamic.data.structure.Vertex;
 import org.junit.Test;
 
 import java.io.File;
@@ -175,11 +176,11 @@ public class Part1Test {
                 if (vertices.length == 1)
                     vertices = line.split(" ");
 
-                final Graph.Vertex vertex;
+                final Vertex vertex;
                 final Integer mainValue = Integer.valueOf(vertices[0]);
 
                 if (!graph.contains(mainValue)) {
-                    vertex = new Graph.Vertex(mainValue);
+                    vertex = new Vertex(mainValue);
                     graph.addVertex(vertex);
                 } else {
                     vertex = graph.getVertex(mainValue);
@@ -193,7 +194,7 @@ public class Part1Test {
                             graph.addEdge(vertex, graph.getVertex(value));
 
                     } else {
-                        final Graph.Vertex newVertex = new Graph.Vertex(value);
+                        final Vertex newVertex = new Vertex(value);
                         graph.addVertex(newVertex);
 
                         if (!graph.containsEdge(vertex, newVertex))

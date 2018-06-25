@@ -12,8 +12,8 @@ public class Graph {
         return this.edges;
     }
 
-    public Collection<Vertex> getVertices() {
-        return this.vertices.values();
+    public List<Vertex> getVertices() {
+        return new ArrayList<>(this.vertices.values());
     }
 
     public void addVertex(final Vertex vertex) {
@@ -21,22 +21,22 @@ public class Graph {
     }
 
     public void addEdge(final Vertex vertex1, final Vertex vertex2) {
-        vertex1.adjacencyList.add(vertex2);
-        vertex2.adjacencyList.add(vertex1);
+        vertex1.getAdjacencyList().add(vertex2);
+        vertex2.getAdjacencyList().add(vertex1);
 
         edges.add(new Edge(vertex1, vertex2));
     }
 
 
     public void addEdge(final Vertex vertex1, final Vertex vertex2, final Integer weight) {
-        vertex1.adjacencyList.add(vertex2);
-        vertex2.adjacencyList.add(vertex1);
+        vertex1.getAdjacencyList().add(vertex2);
+        vertex2.getAdjacencyList().add(vertex1);
 
         edges.add(new Edge(vertex1, vertex2, weight));
     }
 
     public void addEdgeDirected(final Vertex vertex1, final Vertex vertex2) {
-        vertex1.adjacencyList.add(vertex2);
+        vertex1.getAdjacencyList().add(vertex2);
         edges.add(new Edge(vertex1, vertex2));
     }
 
@@ -44,11 +44,11 @@ public class Graph {
 
         for (final Edge edge : edges) {
 
-            if (edge.getSource().getValue().equals(v1.value) && edge.getDestination().getValue().equals(v2.value)) {
+            if (edge.getSource().getValue().equals(v1.getValue()) && edge.getDestination().getValue().equals(v2.getValue())) {
                 return true;
             }
 
-            if (edge.getSource().getValue().equals(v2.value) && edge.getDestination().getValue().equals(v1.value)) {
+            if (edge.getSource().getValue().equals(v2.getValue()) && edge.getDestination().getValue().equals(v1.getValue())) {
                 return true;
             }
         }
@@ -64,116 +64,4 @@ public class Graph {
         return vertices.get(value);
     }
 
-    public static class Edge {
-
-        private Vertex source;
-
-        private Vertex destination;
-
-        private Integer weight;
-
-        public Edge(final Vertex source, final Vertex destination) {
-            this.source = source;
-            this.destination = destination;
-        }
-
-        public Edge(final Vertex source, final Vertex destination, final Integer weight) {
-            this.source = source;
-            this.destination = destination;
-            this.weight = weight;
-        }
-
-        public Vertex getSource() {
-            return source;
-        }
-
-        public Vertex getDestination() {
-            return destination;
-        }
-
-        public void setSource(final Vertex source) {
-            this.source = source;
-        }
-
-        public void setDestination(final Vertex destination) {
-            this.destination = destination;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("Edge{");
-            sb.append("source=").append(source);
-            sb.append(", destination=").append(destination);
-            sb.append('}');
-            return sb.toString();
-        }
-
-        public Integer getWeight() {
-            return weight;
-        }
-
-        public void setWeight(Integer weight) {
-            this.weight = weight;
-        }
-    }
-
-    public static class Vertex implements Comparable<Vertex> {
-
-        private Integer value;
-
-        private Integer finish;
-
-        private List<Vertex> adjacencyList = new ArrayList<>();
-
-        public Vertex(final Integer value) {
-            this.value = value;
-        }
-
-        public List<Vertex> getAdjacencyList() {
-            return adjacencyList;
-        }
-
-        public Integer getValue() {
-            return value;
-        }
-
-        public void setValue(final Integer value) {
-            this.value = value;
-        }
-
-        @Override
-        public boolean equals(final Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            final Vertex vertex = (Vertex) o;
-
-            return value != null ? value.equals(vertex.value) : vertex.value == null;
-        }
-
-        @Override
-        public int hashCode() {
-            return value != null ? value.hashCode() : 0;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("Vertex{");
-            sb.append("value=").append(value);
-            sb.append('}');
-            return sb.toString();
-        }
-
-        public int compareTo(final Vertex vertex) {
-            return this.getValue().compareTo(vertex.getValue());
-        }
-
-        public Integer getFinish() {
-            return finish;
-        }
-
-        public void setFinish(final Integer finish) {
-            this.finish = finish;
-        }
-    }
 }
