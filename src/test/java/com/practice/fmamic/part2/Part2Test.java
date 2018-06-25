@@ -3,6 +3,7 @@ package com.practice.fmamic.part2;
 import static junit.framework.TestCase.*;
 
 import com.practice.fmamic.data.structure.Graph;
+import com.practice.fmamic.data.structure.Heap;
 import com.practice.fmamic.data.structure.Vertex;
 import org.junit.Test;
 
@@ -138,6 +139,29 @@ public class Part2Test {
         final DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath();
 
         assertNotNull(dijkstraShortestPath.calculate(graph));
+    }
+
+    @Test
+    public void heapTest() {
+        Heap heap = new Heap();
+
+        heap.insert(1);
+        heap.insert(2);
+        heap.insert(3);
+        heap.insert(4);
+
+        assertEquals(1, heap.extractMin());
+        assertEquals(2, heap.extractMin());
+
+        heap.insert(1);
+
+        assertEquals(1, heap.extractMin());
+        assertEquals(3, heap.extractMin());
+
+        heap.insert(13);
+
+        assertEquals(4, heap.extractMin());
+        assertEquals(13, heap.extractMin());
     }
 
     private Graph getDijkstraGraphData(final String s) {
