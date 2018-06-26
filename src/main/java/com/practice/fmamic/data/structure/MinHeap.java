@@ -1,6 +1,6 @@
 package com.practice.fmamic.data.structure;
 
-public class Heap {
+public class MinHeap {
 
     private int[] array;
 
@@ -8,18 +8,26 @@ public class Heap {
 
     private Integer capacity = 10 + 1;
 
-    public Heap() {
+    public MinHeap() {
         this.array = new int[capacity];
     }
 
-    public Heap(final Integer capacity) {
+    public MinHeap(final Integer capacity) {
         this.capacity = capacity + 1;
         this.array = new int[capacity];
     }
 
     public void insert(int value) {
         this.array[++size] = value;
-        heapify(size);
+        heapifyMax(size);
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+    public int first() {
+        return this.array[1];
     }
 
     public int extractMin() {
@@ -34,43 +42,56 @@ public class Heap {
         return min;
     }
 
+    // push down O(LogN)
     private void heapifyMin(int position) {
-
         int child1 = 2 * position;
         int child2 = 2 * position + 1;
 
         if (child1 > size && child2 > size)
             return;
 
-        if (child2 > size || this.array[child1] < this.array[child2]) {
+        if (child2 > size || leftChild(position) < rightChild(position)) {
             int temp = this.array[position];
-            this.array[position] = this.array[child1];
+            this.array[position] = leftChild(position);
             this.array[child1] = temp;
 
             heapifyMin(child1);
         } else {
             int temp = this.array[position];
-            this.array[position] = this.array[child2];
+            this.array[position] = rightChild(position);
             this.array[child2] = temp;
 
             heapifyMin(child2);
         }
     }
 
-    private void heapify(int position) {
+    // push up O(LogN)
+    private void heapifyMax(int position) {
         int parent = position / 2;
 
         if (position == parent)
             return;
 
-        if (this.array[position] < this.array[parent]) {
+        if (this.array[position] < parent(position)) {
             int temp = this.array[position];
-            this.array[position] = this.array[parent];
+            this.array[position] = parent(position);
             this.array[parent] = temp;
 
             if (position != 0)
-                heapify(parent);
+                heapifyMax(parent);
         }
+    }
+
+    private int parent(int position) {
+        return this.array[position / 2];
+    }
+
+    private int rightChild(int position) {
+        return this.array[2 * position + 1];
+    }
+
+    private int leftChild(int position) {
+        return this.array[2 * position];
     }
 
     public Integer getCapacity() {

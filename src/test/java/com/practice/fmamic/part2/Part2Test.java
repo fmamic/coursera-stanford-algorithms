@@ -3,7 +3,8 @@ package com.practice.fmamic.part2;
 import static junit.framework.TestCase.*;
 
 import com.practice.fmamic.data.structure.Graph;
-import com.practice.fmamic.data.structure.Heap;
+import com.practice.fmamic.data.structure.MaxHeap;
+import com.practice.fmamic.data.structure.MinHeap;
 import com.practice.fmamic.data.structure.Vertex;
 import org.junit.Test;
 
@@ -144,8 +145,8 @@ public class Part2Test {
     }
 
     @Test
-    public void heapTest() {
-        Heap heap = new Heap();
+    public void minHeapTest() {
+        MinHeap heap = new MinHeap();
 
         heap.insert(1);
         heap.insert(2);
@@ -164,6 +165,33 @@ public class Part2Test {
 
         assertEquals(4, heap.extractMin());
         assertEquals(13, heap.extractMin());
+    }
+
+    @Test
+    public void maxHeapTest() {
+        final MaxHeap heap = new MaxHeap();
+
+        heap.insert(1);
+        heap.insert(2);
+        heap.insert(3);
+        heap.insert(4);
+
+        assertEquals(4, heap.extractMax());
+        assertEquals(3, heap.extractMax());
+        assertEquals(2, heap.extractMax());
+        assertEquals(1, heap.extractMax());
+
+        heap.insert(1);
+        heap.insert(2);
+
+        assertEquals(2, heap.extractMax());
+        assertEquals(1, heap.extractMax());
+
+        heap.insert(100);
+        heap.insert(1002);
+
+        assertEquals(1002, heap.extractMax());
+        assertEquals(100, heap.extractMax());
     }
 
     @Test
