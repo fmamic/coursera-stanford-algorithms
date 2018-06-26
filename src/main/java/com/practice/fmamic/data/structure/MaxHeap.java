@@ -53,7 +53,7 @@ public class MaxHeap {
         if (largest != position) {
             this.store[position] = this.store[largest];
             this.store[largest] = value;
-            maxHeapify(position);
+            maxHeapify(largest);
         }
     }
 

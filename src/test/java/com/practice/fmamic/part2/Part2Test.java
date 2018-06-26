@@ -192,6 +192,20 @@ public class Part2Test {
 
         assertEquals(1002, heap.extractMax());
         assertEquals(100, heap.extractMax());
+
+        heap.insert(4);
+        heap.insert(3);
+        heap.insert(2);
+        heap.insert(1);
+
+        assertEquals(4, heap.extractMax());
+        assertEquals(3, heap.extractMax());
+
+        heap.insert(5);
+
+        assertEquals(5, heap.extractMax());
+        assertEquals(2, heap.extractMax());
+
     }
 
     @Test
