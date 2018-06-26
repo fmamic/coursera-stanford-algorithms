@@ -199,7 +199,7 @@ public class Part2Test {
         final List<Integer> stream = getMedianStream("median.txt");
         final MedianMaintenance medianMaintenance = new MedianMaintenance();
 
-        int result = medianMaintenance.calculate(stream);
+        long result = medianMaintenance.calculate(stream);
 
         assertEquals(10, result % 10000);
     }
