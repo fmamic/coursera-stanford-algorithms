@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -162,6 +164,34 @@ public class Part2Test {
 
         assertEquals(4, heap.extractMin());
         assertEquals(13, heap.extractMin());
+    }
+
+    @Test
+    public void medianTest() {
+        final List<Integer> stream = getMedianStream("median.txt");
+        final MedianMaintenance medianMaintenance = new MedianMaintenance();
+
+        int result = medianMaintenance.calculate(stream);
+
+        assertEquals(10, result % 10000);
+    }
+
+    private List<Integer> getMedianStream(final String s) {
+        final File file = new File(getClass().getClassLoader().getResource(s).getFile());
+        final List<Integer> stream = new ArrayList<>();
+
+        try (final Scanner scanner = new Scanner(file)) {
+
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+                stream.add(Integer.parseInt(line));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return stream;
     }
 
     private Graph getDijkstraGraphData(final String s) {
