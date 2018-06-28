@@ -218,6 +218,31 @@ public class Part2Test {
         assertEquals(10, result % 10000);
     }
 
+    @Test
+    public void twoSumTest() {
+        TwoSum twoSum = new TwoSum();
+        twoSum.calculate(getTwoSumData("2sum.txt"));
+    }
+
+    private long[] getTwoSumData(final String s) {
+        final File file = new File(getClass().getClassLoader().getResource(s).getFile());
+        final long[] stream = new long[1000000];
+
+        try (final Scanner scanner = new Scanner(file)) {
+
+            int i = 0;
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+                stream[i++] = Integer.parseInt(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return stream;
+    }
+
     private List<Integer> getMedianStream(final String s) {
         final File file = new File(getClass().getClassLoader().getResource(s).getFile());
         final List<Integer> stream = new ArrayList<>();
