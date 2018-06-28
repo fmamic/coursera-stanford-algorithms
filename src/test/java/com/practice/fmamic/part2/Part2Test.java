@@ -215,13 +215,19 @@ public class Part2Test {
 
         long result = medianMaintenance.calculate(stream);
 
-        assertEquals(10, result % 10000);
+        assertEquals(1213, result % 10000);
+    }
+
+    @Test
+    public void twoSumTest7() {
+        TwoSum twoSum = new TwoSum();
+        assertEquals(8, twoSum.calculate(new long[] {-3,-1,1,2,9,11,7,6,2}, 3, 10));
     }
 
     @Test
     public void twoSumTest() {
         TwoSum twoSum = new TwoSum();
-        twoSum.calculate(getTwoSumData("2sum.txt"));
+        assertEquals(427, twoSum.calculate(getTwoSumData("2sum.txt"), -10000, 10000));
     }
 
     private long[] getTwoSumData(final String s) {
@@ -233,7 +239,7 @@ public class Part2Test {
             int i = 0;
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
-                stream[i++] = Integer.parseInt(line);
+                stream[i++] = Long.parseLong(line);
             }
 
         } catch (IOException e) {
