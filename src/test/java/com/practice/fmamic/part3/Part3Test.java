@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.practice.fmamic.data.structure.Graph;
 import com.practice.fmamic.data.structure.Job;
+import com.practice.fmamic.data.structure.Vertex;
 import org.junit.Test;
 
 public class Part3Test {
@@ -73,6 +75,57 @@ public class Part3Test {
         List<Job> jobs = getJobsData("jobs.txt");
         assertEquals(67311454237L, application.scheduleOptimalSum(jobs));
     }
+
+    @Test
+    public void primsSpanningTreeTest() {
+        final PrimsMinSpanningTree primsMinSpanningTree = new PrimsMinSpanningTree();
+        final Graph graph = getGraphData("MST.txt");
+        assertEquals(11, primsMinSpanningTree.calculateMSTCost(graph));
+    }
+
+    private Graph getGraphData(final String s) {
+        final File file = new File(getClass().getClassLoader().getResource(s).getFile());
+        final Graph graph = new Graph();
+
+        try (Scanner scanner = new Scanner(file)) {
+
+            scanner.nextLine();
+
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+
+                String[] split1 = line.split(" ");
+
+                final Vertex source;
+
+                if (!graph.contains(Integer.valueOf(split1[0]))) {
+                    source = new Vertex(Integer.valueOf(split1[0]));
+                } else {
+                    source = graph.getVertex(Integer.valueOf(split1[0]));
+                }
+
+                graph.addVertex(source);
+
+
+                final Vertex destination;
+
+                if (!graph.contains(Integer.valueOf(split1[1]))) {
+                    destination = new Vertex(Integer.valueOf(split1[1]));
+                } else {
+                    destination = graph.getVertex(Integer.valueOf(split1[1]));
+                }
+
+                graph.addVertex(destination);
+                graph.addEdge(source, destination, Integer.valueOf(split1[2]));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return graph;
+    }
+
 
     private List<Job> getJobsData(final String s) {
         final File file = new File(getClass().getClassLoader().getResource(s).getFile());
