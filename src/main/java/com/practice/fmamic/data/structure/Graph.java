@@ -20,11 +20,24 @@ public class Graph {
         vertices.put(vertex.getValue(), vertex);
     }
 
-    public void addEdge(final Vertex vertex1, final Vertex vertex2) {
+    public Edge addEdge(final Vertex vertex1, final Vertex vertex2) {
         vertex1.getAdjacencyList().add(vertex2);
         vertex2.getAdjacencyList().add(vertex1);
 
-        edges.add(new Edge(vertex1, vertex2));
+        Edge edge = new Edge(vertex1, vertex2);
+        edges.add(edge);
+        return edge;
+    }
+
+    public void removeVertex(final Vertex vertex) {
+        vertices.remove(vertex.getValue());
+    }
+
+    public void removeEdge(final Vertex vertex1, final Vertex vertex2, final Edge edge) {
+        vertex1.getAdjacencyList().remove(vertex2);
+        vertex2.getAdjacencyList().remove(vertex1);
+
+        edges.remove(edge);
     }
 
 
