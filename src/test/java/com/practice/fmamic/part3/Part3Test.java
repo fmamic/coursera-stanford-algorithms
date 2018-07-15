@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import com.practice.fmamic.data.structure.DisjointSet;
 import com.practice.fmamic.data.structure.Graph;
 import com.practice.fmamic.data.structure.Job;
 import com.practice.fmamic.data.structure.Vertex;
@@ -156,6 +157,43 @@ public class Part3Test {
     public void hammingDistanceTest() {
         final Clustering clustering = new Clustering();
         assertEquals(1, clustering.distance(9, 11));
+    }
+
+    @Test
+    public void disjointSetTest() {
+        final DisjointSet disjointSet = new DisjointSet(8);
+        disjointSet.union(1,5);
+        disjointSet.union(1,6);
+
+        assertEquals(1, disjointSet.find(5));
+        assertEquals(1, disjointSet.find(6));
+
+        assertEquals(6, disjointSet.getSize());
+
+        disjointSet.union(2,3);
+        disjointSet.union(3,4);
+
+        assertEquals(2, disjointSet.find(3));
+        assertEquals(2, disjointSet.find(4));
+
+        disjointSet.union(1,2);
+
+        assertEquals(1, disjointSet.find(2));
+        assertEquals(1, disjointSet.find(5));
+        assertEquals(1, disjointSet.find(6));
+        assertEquals(1, disjointSet.find(3));
+
+        assertEquals(7, disjointSet.find(7));
+
+        disjointSet.union(1, 7);
+
+        assertEquals(1, disjointSet.find(7));
+
+        assertEquals(1,disjointSet.getSize());
+
+        disjointSet.union(1, 7);
+
+        assertEquals(2,disjointSet.getSize());
     }
 
     private Map<Integer, Vertex> getClusterData(final String s) {

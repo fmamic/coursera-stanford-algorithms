@@ -1,9 +1,6 @@
 package com.practice.fmamic.part3;
 
-import com.practice.fmamic.data.structure.DisjointSetNaive;
-import com.practice.fmamic.data.structure.Edge;
-import com.practice.fmamic.data.structure.Graph;
-import com.practice.fmamic.data.structure.Vertex;
+import com.practice.fmamic.data.structure.*;
 
 import java.util.*;
 
@@ -63,7 +60,7 @@ class Clustering {
 
         }
 
-        final DisjointSetNaive disjointSet = new DisjointSetNaive(graph.getVertices().size());
+        final DisjointSet disjointSet = new DisjointSet(graph.getVertices().size());
         final List<Edge> edges = graph.getEdges();
 
         Collections.sort(edges, new Comparator<Edge>() {
