@@ -196,6 +196,31 @@ public class Part3Test {
         assertEquals(2,disjointSet.getSize());
     }
 
+    @Test
+    public void huffmanCodeTest() {
+        HuffmanCode huffmanCode = new HuffmanCode();
+        assertEquals(1000, huffmanCode.maximumLengthCode(getHuffmanCodeData("huffman.txt")));
+    }
+
+    private Map<Integer, Long> getHuffmanCodeData(String s) {
+        final File file = new File(getClass().getClassLoader().getResource(s).getFile());
+        final Map<Integer, Long> map = new HashMap<>();
+
+        try (Scanner scanner = new Scanner(file)) {
+            scanner.nextLine();
+            int key = 0;
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+                map.put(key++, Long.parseLong(line));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return map;
+    }
+
     private Map<Integer, Vertex> getClusterData(final String s) {
         final File file = new File(getClass().getClassLoader().getResource(s).getFile());
         final Map<Integer, Vertex> map = new HashMap<>();
