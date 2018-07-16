@@ -218,6 +218,47 @@ public class Part3Test {
         assertEquals("5", huffmanCode.decode("00"));
     }
 
+    @Test
+    public void mwisTest1() {
+        MaximumWIS maximumWIS = new MaximumWIS();
+        assertEquals(2616, maximumWIS.calculateMaximumWIS(getMaximumWISData("mwis1.txt")));
+    }
+
+    @Test
+    public void mwisTest2() {
+        MaximumWIS maximumWIS = new MaximumWIS();
+        assertEquals(2533, maximumWIS.calculateMaximumWIS(getMaximumWISData("mwis2.txt")));
+    }
+
+    @Test
+    public void mwisTest3() {
+        MaximumWIS maximumWIS = new MaximumWIS();
+        assertEquals(2533, maximumWIS.calculateMaximumWIS(getMaximumWISData("mwis.txt")));
+    }
+
+    private long[] getMaximumWISData(String s) {
+        final File file = new File(getClass().getClassLoader().getResource(s).getFile());
+
+        long[] result = null;
+
+        try (Scanner scanner = new Scanner(file)) {
+
+            String length = scanner.nextLine();
+            result = new long[Integer.parseInt(length)];
+
+            int index = 0;
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+                result[index++] = Long.parseLong(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     private Map<Integer, Long> getHuffmanCodeData(String s) {
         final File file = new File(getClass().getClassLoader().getResource(s).getFile());
         final Map<Integer, Long> map = new HashMap<>();
