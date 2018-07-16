@@ -200,6 +200,7 @@ public class Part3Test {
     public void huffmanCodeTest() {
         HuffmanCode huffmanCode = new HuffmanCode();
         assertEquals(1000, huffmanCode.maximumLengthCode(getHuffmanCodeData("huffman.txt")));
+        assertEquals(20, huffmanCode.minimumLengthCode(getHuffmanCodeData("huffman.txt")));
     }
 
     private Map<Integer, Long> getHuffmanCodeData(String s) {

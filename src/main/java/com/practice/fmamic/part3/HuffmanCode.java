@@ -6,9 +6,19 @@ import java.util.PriorityQueue;
 
 class HuffmanCode {
 
+    long maximumLengthCode(final Map<Integer, Long> input) {
+        final PriorityQueue<HuffmanNode> queue = new PriorityQueue<>(new Comparator<HuffmanNode>() {
+            @Override
+            public int compare(final HuffmanNode o1, final HuffmanNode o2) {
+                return o2.weight.compareTo(o1.weight);
+            }
+        });
 
-    int maximumLengthCode(final Map<Integer, Long> input) {
+        return getHuffmanDepth(input, queue);
+    }
 
+    int minimumLengthCode(final Map<Integer, Long> input) {
+        // O(nLogN)
         final PriorityQueue<HuffmanNode> queue = new PriorityQueue<>(new Comparator<HuffmanNode>() {
             @Override
             public int compare(final HuffmanNode o1, final HuffmanNode o2) {
@@ -16,45 +26,64 @@ class HuffmanCode {
             }
         });
 
+        return getHuffmanDepth(input, queue);
+    }
+
+    // O(n)
+    private int maxDepth(final HuffmanNode node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int lDepth = maxDepth(node.left);
+            int rDepth = maxDepth(node.right);
+
+            return lDepth > rDepth ? lDepth+1 : rDepth+1;
+        }
+    }
+
+    private int getHuffmanDepth(final Map<Integer, Long> input, final PriorityQueue<HuffmanNode> queue) {
         for (final Map.Entry<Integer, Long> entry : input.entrySet()) {
             queue.offer(new HuffmanNode(entry.getKey(), entry.getValue()));
         }
 
-        int result = 0;
+        HuffmanNode root = null;
         while (!queue.isEmpty()) {
+            HuffmanNode left = queue.poll();
+            HuffmanNode right = queue.poll();
 
-            HuffmanNode huffman1 = queue.poll();
-
-            if (queue.peek() == null) {
-                result++;
+            if (left == null || right == null) {
+                root = left != null ? left : right;
                 break;
             }
 
-            HuffmanNode huffman2 = queue.poll();
+            HuffmanNode merge = new HuffmanNode(left.key1, right.key1, left.weight + right.weight, left, right);
 
-            queue.offer(new HuffmanNode(huffman1.key, huffman1.weight + huffman2.weight));
-            result++;
+            queue.add(merge);
         }
 
-        return result;
-    }
-
-    int minimumLengthCode(final Map<Integer, Integer> input) {
-
-        return 0;
+        return maxDepth(root);
     }
 
     static class HuffmanNode {
-        Integer key;
+
+        Integer key1;
+        Integer key2;
+
         Long weight;
+        HuffmanNode left;
+        HuffmanNode right;
 
-        HuffmanCode left;
-        HuffmanCode right;
+        HuffmanNode(final Integer key, final Long value) {
+            this.key1 = key;
+            this.weight = value;
+        }
 
-        HuffmanNode(final Integer key, final Long weight) {
-            this.key = key;
+        HuffmanNode(final Integer key1, final Integer key2, final long weight, final HuffmanNode left, final HuffmanNode right) {
+            this.key1 = key1;
+            this.key2 = key2;
             this.weight = weight;
+            this.left = left;
+            this.right = right;
         }
     }
-
 }
