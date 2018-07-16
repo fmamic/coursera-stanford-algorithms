@@ -197,10 +197,25 @@ public class Part3Test {
     }
 
     @Test
+    public void huffmanCodeTest1() {
+        HuffmanCode huffmanCode = new HuffmanCode();
+        assertEquals(19, huffmanCode.maximumLengthCode(getHuffmanCodeData("huffman.txt")));
+        assertEquals(9, huffmanCode.minimumLengthCode(getHuffmanCodeData("huffman.txt")));
+    }
+
+    @Test
+    public void huffmanCodeTest2() {
+        HuffmanCode huffmanCode = new HuffmanCode();
+        assertEquals(5, huffmanCode.maximumLengthCode(getHuffmanCodeData("huffman2.txt")));
+        assertEquals(2, huffmanCode.minimumLengthCode(getHuffmanCodeData("huffman2.txt")));
+    }
+
+    @Test
     public void huffmanCodeTest() {
         HuffmanCode huffmanCode = new HuffmanCode();
-        assertEquals(1000, huffmanCode.maximumLengthCode(getHuffmanCodeData("huffman.txt")));
-        assertEquals(20, huffmanCode.minimumLengthCode(getHuffmanCodeData("huffman.txt")));
+        assertEquals(2, huffmanCode.minimumLengthCode(getHuffmanCodeData("huffman2.txt")));
+
+        assertEquals("5", huffmanCode.decode("00"));
     }
 
     private Map<Integer, Long> getHuffmanCodeData(String s) {
