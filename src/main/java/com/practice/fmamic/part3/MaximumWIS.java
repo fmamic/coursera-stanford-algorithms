@@ -12,10 +12,10 @@ class MaximumWIS {
         dp[1] = input[0];
 
         for (int i = 1; i < input.length; i++) {
-            dp[i+1] = input[i] + dp[i-1];
+            dp[i+1] = Math.max(dp[i], input[i] + dp[i-1]);
         }
 
-        return dp[dp.length - 1] > dp[dp.length - 2] ? dp[dp.length - 1] : dp[dp.length - 2];
+        return dp[dp.length - 1];
     }
 
 }
