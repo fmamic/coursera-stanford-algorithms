@@ -221,19 +221,23 @@ public class Part3Test {
     @Test
     public void mwisTest1() {
         MaximumWIS maximumWIS = new MaximumWIS();
-        assertEquals(2616, maximumWIS.calculateMaximumWIS(getMaximumWISData("mwis1.txt")));
+        assertEquals(2616, maximumWIS.calculateMaximumWISValue(getMaximumWISData("mwis1.txt")));
+        assertEquals(2616, maximumWIS.calculateMaximumWISNaive(getMaximumWISData("mwis1.txt")));
+        assertEquals("", maximumWIS.calculateMaximumWISSolution(getMaximumWISData("mwis1.txt")));
     }
 
     @Test
     public void mwisTest2() {
         MaximumWIS maximumWIS = new MaximumWIS();
-        assertEquals(2533, maximumWIS.calculateMaximumWIS(getMaximumWISData("mwis2.txt")));
+        assertEquals(2533, maximumWIS.calculateMaximumWISValue(getMaximumWISData("mwis2.txt")));
+        assertEquals("1010010010", maximumWIS.calculateMaximumWISSolution(getMaximumWISData("mwis2.txt")));
     }
 
     @Test
     public void mwisTest3() {
         MaximumWIS maximumWIS = new MaximumWIS();
-        assertEquals(2533, maximumWIS.calculateMaximumWIS(getMaximumWISData("mwis.txt")));
+        assertEquals(2955353732L, maximumWIS.calculateMaximumWISValue(getMaximumWISData("mwis.txt")));
+        assertEquals("1010010010", maximumWIS.calculateMaximumWISSolution(getMaximumWISData("mwis.txt")));
     }
 
     private long[] getMaximumWISData(String s) {
