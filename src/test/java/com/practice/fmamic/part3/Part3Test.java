@@ -240,6 +240,11 @@ public class Part3Test {
         assertEquals("1010010010", maximumWIS.calculateMaximumWISSolution(getMaximumWISData("mwis.txt")));
     }
 
+    @Test
+    public void knapsackTest1() {
+
+    }
+
     private long[] getMaximumWISData(String s) {
         final File file = new File(getClass().getClassLoader().getResource(s).getFile());
 
