@@ -242,7 +242,8 @@ public class Part3Test {
 
     @Test
     public void knapsackTest1() {
-
+        Knapsack knapsack = new Knapsack();
+        assertEquals(14, knapsack.maximumKnapsackVauleNaive(new int[] {4, 2, 8, 10}, new int[] {4, 2, 5, 2}, 6));
     }
 
     private long[] getMaximumWISData(String s) {
