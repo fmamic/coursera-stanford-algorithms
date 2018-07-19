@@ -22,7 +22,7 @@ class Knapsack {
 
     // time O(vW) space O(nW) + recursion stack O(n)
     int maximumKnapsackValueMemo(int[] values, int[] weights, int total) {
-        int[][] memo = new int[values.length][total+1];
+        int[][] memo = new int[values.length][total + 1];
         return maximumKnapsackValueMemoR(values, weights, 0, 0, total, memo);
     }
 
@@ -46,13 +46,13 @@ class Knapsack {
     }
 
     // time O(vW) space O(nW)
-    int maximumKnapsackSolutionDp(int[] values, int[] weights, int total) {
+    int maximumKnapsackValueDp(int[] values, int[] weights, int total) {
 
         if (total == 0)
             return 0;
 
-        int[] memo1 = new int[total+1];
-        int[] memo2 = new int[total+1];
+        int[] memo1 = new int[total + 1];
+        int[] memo2 = new int[total + 1];
 
         for (int i = 1; i < values.length; i++) {
             for (int j = 1; j <= total; j++) {
@@ -68,7 +68,51 @@ class Knapsack {
             memo2 = temp;
         }
 
-        return memo1[memo1.length-1];
+        return memo1[memo1.length - 1];
     }
 
+
+    // time O(vW) space O(nW)
+    String maximumKnapsackSolutionDp(int[] values, int[] weights, int total) {
+
+        int[][] memo = new int[values.length][total + 1];
+
+        for (int i = 0; i <= total; i++) {
+            if (weights[0] <= i) {
+                memo[0][i] = weights[0];
+            }
+        }
+
+        for (int i = 1; i < values.length; i++) {
+            for (int j = 1; j <= total; j++) {
+                if (j - weights[i] < 0) {
+                    memo[i][j] = memo[i - 1][j];
+                } else {
+                    memo[i][j] = Math.max(memo[i - 1][j], memo[i - 1][j - weights[i]] + values[i]);
+                }
+            }
+        }
+
+        StringBuilder solution = new StringBuilder();
+
+        int i = values.length - 1;
+        int j = total;
+        while (i - 1 >= 0 && j >= 0) {
+
+            if (memo[i][j] == memo[i - 1][j]) {
+                i = i - 1;
+                if (i - 1 < 0 && memo[i][j] > 0) {
+                    solution.append(i+1);
+                    break;
+                }
+                continue;
+            }
+
+            solution.append(i+1);
+            j = j - weights[i];
+            i = i - 1;
+        }
+
+        return solution.toString();
+    }
 }

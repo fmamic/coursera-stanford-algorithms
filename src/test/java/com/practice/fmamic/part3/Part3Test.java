@@ -189,7 +189,7 @@ public class Part3Test {
 
         assertEquals(1, disjointSet.find(7));
 
-        assertEquals(1,disjointSet.getSize());
+        assertEquals(2,disjointSet.getSize());
 
         disjointSet.union(1, 7);
 
@@ -223,7 +223,7 @@ public class Part3Test {
         MaximumWIS maximumWIS = new MaximumWIS();
         assertEquals(2616, maximumWIS.calculateMaximumWISValue(getMaximumWISData("mwis1.txt")));
         assertEquals(2616, maximumWIS.calculateMaximumWISNaive(getMaximumWISData("mwis1.txt")));
-        assertEquals("", maximumWIS.calculateMaximumWISSolution(getMaximumWISData("mwis1.txt")));
+        assertEquals("0101010101 ", maximumWIS.calculateMaximumWISSolution(getMaximumWISData("mwis1.txt")));
     }
 
     @Test
@@ -237,7 +237,7 @@ public class Part3Test {
     public void mwisTest3() {
         MaximumWIS maximumWIS = new MaximumWIS();
         assertEquals(2955353732L, maximumWIS.calculateMaximumWISValue(getMaximumWISData("mwis.txt")));
-        assertEquals("1010010010", maximumWIS.calculateMaximumWISSolution(getMaximumWISData("mwis.txt")));
+        assertEquals("1010100101001010010101010101001010010101010101010101010101010101010010010010101010101001010101010101001001010101001010010101010100101001001010101010101010101001010101010100101010101010101001001010101010101010101001010100101001010101010101010010101010010101010010101010101010101010101010101001010101010101010101010101010010101010101010101010101010101010101010101010101010101010101010101010101010101010010101010100101010010100101010101010101010101010101001010101010101010101010101001010100101010101010100101001010101001010101010101010010010101010100101010101010100100100101010101010100101010101010101010101010101001010101010101001010101001010101010101001010101010101010010101001001001010101010100101010010101010100101010101010010101001010101010101001010100101001001001010101010101001001010101001010101010100100100101010010101010101001010010101010010010101010101010010101001010010101010101010101010101010010101010101010101010010010100101010101010101010101010101010101010010101010101010101010101010100101", maximumWIS.calculateMaximumWISSolution(getMaximumWISData("mwis.txt")));
     }
 
     @Test
@@ -264,21 +264,27 @@ public class Part3Test {
     public void knapsackTest4() {
         Knapsack knapsack = new Knapsack();
         KnapsackData knapsackData = getKnapsackData("knapsack1.txt");
-        assertEquals(2493893, knapsack.maximumKnapsackSolutionDp(knapsackData.values, knapsackData.weights, knapsackData.total));
+        assertEquals(2493893, knapsack.maximumKnapsackValueDp(knapsackData.values, knapsackData.weights, knapsackData.total));
     }
 
     @Test
     public void knapsackTest5() {
         Knapsack knapsack = new Knapsack();
         KnapsackData knapsackData = getKnapsackData("knapsack2");
-        assertEquals(147, knapsack.maximumKnapsackSolutionDp(knapsackData.values, knapsackData.weights, knapsackData.total));
+        assertEquals(147, knapsack.maximumKnapsackValueDp(knapsackData.values, knapsackData.weights, knapsackData.total));
     }
 
     @Test
     public void knapsackTest6() {
         Knapsack knapsack = new Knapsack();
         KnapsackData knapsackData = getKnapsackData("knapsack_big.txt");
-        assertEquals(147, knapsack.maximumKnapsackSolutionDp(knapsackData.values, knapsackData.weights, knapsackData.total));
+        assertEquals(4243395, knapsack.maximumKnapsackValueDp(knapsackData.values, knapsackData.weights, knapsackData.total));
+    }
+
+    @Test
+    public void knapsackTest8() {
+        Knapsack knapsack = new Knapsack();
+        assertEquals("41", knapsack.maximumKnapsackSolutionDp(new int[] {4, 2, 8, 10}, new int[] {4, 2, 5, 2}, 6));
     }
 
     private KnapsackData getKnapsackData(final String s) {

@@ -47,15 +47,6 @@ class MaximumWIS {
                 builder.append("1");
         }
 
-        System.out.println(solution[0]);
-        System.out.println(solution[1]);
-        System.out.println(solution[2]);
-        System.out.println(solution[3]);
-        System.out.println(solution[16]);
-        System.out.println(solution[116]);
-        System.out.println(solution[516]);
-        System.out.println(solution[996]);
-
         return builder.toString();
     }
 
