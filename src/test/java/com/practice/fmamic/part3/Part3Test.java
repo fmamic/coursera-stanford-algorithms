@@ -243,7 +243,65 @@ public class Part3Test {
     @Test
     public void knapsackTest1() {
         Knapsack knapsack = new Knapsack();
-        assertEquals(14, knapsack.maximumKnapsackVauleNaive(new int[] {4, 2, 8, 10}, new int[] {4, 2, 5, 2}, 6));
+        assertEquals(14, knapsack.maximumKnapsackValueNaive(new int[] {4, 2, 8, 10}, new int[] {4, 2, 5, 2}, 6));
+    }
+
+    @Test
+    public void knapsackTest2() {
+        Knapsack knapsack = new Knapsack();
+        KnapsackData knapsackData = getKnapsackData("knapsack2");
+        assertEquals(147, knapsack.maximumKnapsackValueNaive(knapsackData.values, knapsackData.weights, knapsackData.total));
+    }
+
+    @Test
+    public void knapsackTest3() {
+        Knapsack knapsack = new Knapsack();
+        KnapsackData knapsackData = getKnapsackData("knapsack2");
+        assertEquals(147, knapsack.maximumKnapsackValueMemo(knapsackData.values, knapsackData.weights, knapsackData.total));
+    }
+
+    @Test
+    public void knapsackTest4() {
+        Knapsack knapsack = new Knapsack();
+        KnapsackData knapsackData = getKnapsackData("knapsack1.txt");
+        assertEquals(2493893, knapsack.maximumKnapsackSolutionDp(knapsackData.values, knapsackData.weights, knapsackData.total));
+    }
+
+    @Test
+    public void knapsackTest5() {
+        Knapsack knapsack = new Knapsack();
+        KnapsackData knapsackData = getKnapsackData("knapsack2");
+        assertEquals(147, knapsack.maximumKnapsackSolutionDp(knapsackData.values, knapsackData.weights, knapsackData.total));
+    }
+
+    @Test
+    public void knapsackTest6() {
+        Knapsack knapsack = new Knapsack();
+        KnapsackData knapsackData = getKnapsackData("knapsack_big.txt");
+        assertEquals(147, knapsack.maximumKnapsackSolutionDp(knapsackData.values, knapsackData.weights, knapsackData.total));
+    }
+
+    private KnapsackData getKnapsackData(final String s) {
+        final File file = new File(getClass().getClassLoader().getResource(s).getFile());
+        KnapsackData knapsackData = null;
+
+        try (Scanner scanner = new Scanner(file)) {
+            String length = scanner.nextLine();
+            knapsackData = new KnapsackData(Integer.parseInt(length.split(" ")[1]), Integer.parseInt(length.split(" ")[1]), Integer.parseInt(length.split(" ")[0]));
+
+            int index = 0;
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+                knapsackData.values[index] = Integer.parseInt(line.split(" ")[0]);
+                knapsackData.weights[index] = Integer.parseInt(line.split(" ")[1]);
+                index++;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return knapsackData;
     }
 
     private long[] getMaximumWISData(String s) {
@@ -376,4 +434,25 @@ public class Part3Test {
     }
 
 
+    private class KnapsackData {
+
+        int[] weights;
+        int[] values;
+        int total;
+
+        KnapsackData(final int weights, final int values, final int total) {
+            this.weights = new int[weights];
+            this.values = new int[values];
+            this.total = total;
+        }
+
+        public int[] getWeights() {
+            return weights;
+        }
+
+        public void setValues(final int[] values) {
+            this.values = values;
+        }
+
+    }
 }
