@@ -287,6 +287,14 @@ public class Part3Test {
         assertEquals("41", knapsack.maximumKnapsackSolutionDp(new int[] {4, 2, 8, 10}, new int[] {4, 2, 5, 2}, 6));
     }
 
+    @Test
+    public void sequenceAlignmentTest() {
+        SequenceAlignment sequenceAlignment = new SequenceAlignment();
+        assertEquals(6, sequenceAlignment.calculateNaiveValue("GCATGCU", "GATTACA"));
+        assertEquals(6, sequenceAlignment.calculateOptimalValue("GCATGCU", "GATTACA"));
+        assertEquals("U-CG-T-ACG#-AC-ATTA-G", sequenceAlignment.calculateOptimalSolution("GCATGCU", "GATTACA"));
+    }
+
     private KnapsackData getKnapsackData(final String s) {
         final File file = new File(getClass().getClassLoader().getResource(s).getFile());
         KnapsackData knapsackData = null;
