@@ -10,28 +10,24 @@ class OptimalBST {
             dp[i][i] = frequency[i];
         }
 
-        for (int i = 0; i < frequency.length; i++) {
-            for (int j = i + 1, p = 0; j < frequency.length; j++, p++) {
+        for (int length = 2; length <= frequency.length; length++) {
+
+            for (int i = 0; i <= frequency.length - length; i++) {
+
+                int j = i + length - 1;
+                dp[i][j] = Integer.MAX_VALUE;
 
                 int sum = 0;
-                for (int k = p; k <= j; k++) {
+                for (int k = i; k <= j; k++) {
                     sum += frequency[k];
                 }
 
-                int result = Integer.MAX_VALUE;
-                for (int k = i; k <= j; k++) {
-                    if (k - 1 < j && k + 1 <= j && p + 1 <= i) {
-                        result = Math.min(result, sum + dp[p + 1][k + 1]);
-                    } else if (p + 1 > i && k - 1 >= j) {
-                        result = Math.min(result, sum + dp[p][k - 1]);
-                    } else if (p + 1 > i && k - 1 < j || k + 1 > j) {
-                        result = Math.min(result, sum);
-                    } else {
-                        result = Math.min(result, sum + Math.min(dp[p][k - 1], dp[p + 1][k + 1]));
-                    }
-                }
+                for (int r = i; r <= j; r++) {
+                    int cost = ((r > i) ? dp[i][r-1] : 0) + ((r < j) ? dp[r+1][j] : 0) + sum;
 
-                dp[p][j] = result;
+                    if (cost < dp[i][j])
+                        dp[i][j] = cost;
+                }
             }
         }
 

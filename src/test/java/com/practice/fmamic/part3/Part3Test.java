@@ -299,6 +299,7 @@ public class Part3Test {
     public void optimalBSTCostTest() {
         OptimalBST optimalBST = new OptimalBST();
         assertEquals(26, optimalBST.calculateOptimalBSTCost(new int[]{4, 2, 6, 3}));
+        assertEquals(218, optimalBST.calculateOptimalBSTCost(new int[]{5, 40, 8, 4, 10, 10, 23}));
     }
 
     private KnapsackData getKnapsackData(final String s) {
