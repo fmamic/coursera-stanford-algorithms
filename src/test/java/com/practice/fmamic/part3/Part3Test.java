@@ -162,21 +162,21 @@ public class Part3Test {
     @Test
     public void disjointSetTest() {
         final DisjointSet disjointSet = new DisjointSet(8);
-        disjointSet.union(1,5);
-        disjointSet.union(1,6);
+        disjointSet.union(1, 5);
+        disjointSet.union(1, 6);
 
         assertEquals(1, disjointSet.find(5));
         assertEquals(1, disjointSet.find(6));
 
         assertEquals(6, disjointSet.getSize());
 
-        disjointSet.union(2,3);
-        disjointSet.union(3,4);
+        disjointSet.union(2, 3);
+        disjointSet.union(3, 4);
 
         assertEquals(2, disjointSet.find(3));
         assertEquals(2, disjointSet.find(4));
 
-        disjointSet.union(1,2);
+        disjointSet.union(1, 2);
 
         assertEquals(1, disjointSet.find(2));
         assertEquals(1, disjointSet.find(5));
@@ -189,11 +189,11 @@ public class Part3Test {
 
         assertEquals(1, disjointSet.find(7));
 
-        assertEquals(2,disjointSet.getSize());
+        assertEquals(2, disjointSet.getSize());
 
         disjointSet.union(1, 7);
 
-        assertEquals(2,disjointSet.getSize());
+        assertEquals(2, disjointSet.getSize());
     }
 
     @Test
@@ -243,7 +243,7 @@ public class Part3Test {
     @Test
     public void knapsackTest1() {
         Knapsack knapsack = new Knapsack();
-        assertEquals(14, knapsack.maximumKnapsackValueNaive(new int[] {4, 2, 8, 10}, new int[] {4, 2, 5, 2}, 6));
+        assertEquals(14, knapsack.maximumKnapsackValueNaive(new int[]{4, 2, 8, 10}, new int[]{4, 2, 5, 2}, 6));
     }
 
     @Test
@@ -284,7 +284,7 @@ public class Part3Test {
     @Test
     public void knapsackTest8() {
         Knapsack knapsack = new Knapsack();
-        assertEquals("41", knapsack.maximumKnapsackSolutionDp(new int[] {4, 2, 8, 10}, new int[] {4, 2, 5, 2}, 6));
+        assertEquals("41", knapsack.maximumKnapsackSolutionDp(new int[]{4, 2, 8, 10}, new int[]{4, 2, 5, 2}, 6));
     }
 
     @Test
@@ -293,6 +293,12 @@ public class Part3Test {
         assertEquals(6, sequenceAlignment.calculateNaiveValue("GCATGCU", "GATTACA"));
         assertEquals(6, sequenceAlignment.calculateOptimalValue("GCATGCU", "GATTACA"));
         assertEquals("U-CG-T-ACG#-AC-ATTA-G", sequenceAlignment.calculateOptimalSolution("GCATGCU", "GATTACA"));
+    }
+
+    @Test
+    public void optimalBSTCostTest() {
+        OptimalBST optimalBST = new OptimalBST();
+        assertEquals(26, optimalBST.calculateOptimalBSTCost(new int[]{4, 2, 6, 3}));
     }
 
     private KnapsackData getKnapsackData(final String s) {
