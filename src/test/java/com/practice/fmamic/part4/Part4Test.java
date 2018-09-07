@@ -53,6 +53,7 @@ public class Part4Test {
 
         assertEquals(1, bellmanFord.calculateDistanceRec(graph, 0, 4, 0, 0));
         assertEquals(1, bellmanFord.calculateDistance(graph));
+        assertEquals("4-1-0", bellmanFord.calculateDistanceSpaceOptimizationWithPath(graph));
     }
 
 }
