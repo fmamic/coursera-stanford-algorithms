@@ -2,12 +2,19 @@ package com.practice.fmamic.part4;
 
 public class Graph {
 
-    class Edge {
+    static class Edge {
         int source;
         int destination;
         int weight;
+
         Edge() {
             source = destination = weight = 0;
+        }
+
+        Edge(int source, int destination, int weight) {
+            this.source = source;
+            this.destination = destination;
+            this.weight = weight;
         }
     }
 

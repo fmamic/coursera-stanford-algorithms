@@ -2,6 +2,10 @@ package com.practice.fmamic.part4;
 
 import static junit.framework.TestCase.assertEquals;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 import org.junit.Test;
 
 public class Part4Test {
@@ -54,6 +58,51 @@ public class Part4Test {
         assertEquals(1, bellmanFord.calculateDistanceRec(graph, 0, 4, 0, 0));
         assertEquals(1, bellmanFord.calculateDistance(graph));
         assertEquals("4-1-0", bellmanFord.calculateDistanceSpaceOptimizationWithPath(graph));
+    }
+
+    @Test
+    public void floydWarshallTest1() {
+        final Graph graph = parseInput("apsp_1.txt");
+        final FloydWarshall floydWarshall = new FloydWarshall();
+
+        assertEquals((Integer) 1, floydWarshall.calculate(graph));
+    }
+
+    @Test
+    public void floydWarshallTest2() {
+        final Graph graph = parseInput("apsp_2.txt");
+        final FloydWarshall floydWarshall = new FloydWarshall();
+
+        assertEquals((Integer) 1, floydWarshall.calculate(graph));
+    }
+
+    @Test
+    public void floydWarshallTest3() {
+        final Graph graph = parseInput("apsp_3.txt");
+        final FloydWarshall floydWarshall = new FloydWarshall();
+
+        assertEquals((Integer) 1, floydWarshall.calculate(graph));
+    }
+
+    private Graph parseInput(final String fileName) {
+        final File file = new File(getClass().getClassLoader().getResource(fileName).getFile());
+        Graph graph = null;
+
+        try (final Scanner scanner = new Scanner(file)) {
+            final String sizeLine = scanner.nextLine();
+            graph = new Graph(Integer.valueOf(sizeLine.split(" ")[0]), Integer.valueOf(sizeLine.split(" ")[1]));
+            int index = 0;
+
+            while (scanner.hasNextLine()) {
+                final String[] line = scanner.nextLine().split(" ");
+                graph.edge[index++] = new Graph.Edge(Integer.valueOf(line[0]), Integer.valueOf(line[1]), Integer.valueOf(line[2]));
+            }
+
+        } catch (final IOException exception) {
+            exception.printStackTrace();
+        }
+
+        return graph;
     }
 
 }
