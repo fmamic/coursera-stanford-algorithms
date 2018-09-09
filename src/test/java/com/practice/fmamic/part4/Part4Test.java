@@ -1,6 +1,8 @@
 package com.practice.fmamic.part4;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,11 +63,75 @@ public class Part4Test {
     }
 
     @Test
+    public void floydWarshallTest0() {
+        Graph graph = new Graph(4, 6);
+
+        graph.edge[0].source = 1;
+        graph.edge[0].destination = 2;
+        graph.edge[0].weight = 3;
+
+        graph.edge[1].source = 1;
+        graph.edge[1].destination = 3;
+        graph.edge[1].weight = 6;
+
+        graph.edge[2].source = 1;
+        graph.edge[2].destination = 4;
+        graph.edge[2].weight = 15;
+
+        graph.edge[3].source = 3;
+        graph.edge[3].destination = 4;
+        graph.edge[3].weight = 2;
+
+        graph.edge[4].source = 2;
+        graph.edge[4].destination = 3;
+        graph.edge[4].weight = -2;
+
+        graph.edge[5].source = 4;
+        graph.edge[5].destination = 1;
+        graph.edge[5].weight = 1;
+
+        final FloydWarshall floydWarshall = new FloydWarshall();
+        assertEquals(-2L, (long) floydWarshall.calculate(graph));
+    }
+
+    @Test
+    public void floydWarshallTestNegativeCycle() {
+        Graph graph = new Graph(4, 6);
+
+        graph.edge[0].source = 1;
+        graph.edge[0].destination = 2;
+        graph.edge[0].weight = 3;
+
+        graph.edge[1].source = 1;
+        graph.edge[1].destination = 3;
+        graph.edge[1].weight = -6;
+
+        graph.edge[2].source = 1;
+        graph.edge[2].destination = 4;
+        graph.edge[2].weight = 15;
+
+        graph.edge[3].source = 3;
+        graph.edge[3].destination = 4;
+        graph.edge[3].weight = 2;
+
+        graph.edge[4].source = 2;
+        graph.edge[4].destination = 3;
+        graph.edge[4].weight = -2;
+
+        graph.edge[5].source = 4;
+        graph.edge[5].destination = 1;
+        graph.edge[5].weight = 1;
+
+        final FloydWarshall floydWarshall = new FloydWarshall();
+        assertEquals(null, floydWarshall.calculate(graph));
+    }
+
+    @Test
     public void floydWarshallTest1() {
         final Graph graph = parseInput("apsp_1.txt");
         final FloydWarshall floydWarshall = new FloydWarshall();
 
-        assertEquals((Integer) 1, floydWarshall.calculate(graph));
+        assertNull(floydWarshall.calculate(graph));
     }
 
     @Test
@@ -73,7 +139,7 @@ public class Part4Test {
         final Graph graph = parseInput("apsp_2.txt");
         final FloydWarshall floydWarshall = new FloydWarshall();
 
-        assertEquals((Integer) 1, floydWarshall.calculate(graph));
+        assertNull(floydWarshall.calculate(graph));
     }
 
     @Test
@@ -81,7 +147,7 @@ public class Part4Test {
         final Graph graph = parseInput("apsp_3.txt");
         final FloydWarshall floydWarshall = new FloydWarshall();
 
-        assertEquals((Integer) 1, floydWarshall.calculate(graph));
+        assertEquals(-19L, (long) floydWarshall.calculate(graph));
     }
 
     private Graph parseInput(final String fileName) {
