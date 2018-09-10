@@ -1,7 +1,6 @@
 package com.practice.fmamic.part4;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 
 import java.io.File;
@@ -123,7 +122,7 @@ public class Part4Test {
         graph.edge[5].weight = 1;
 
         final FloydWarshall floydWarshall = new FloydWarshall();
-        assertEquals(null, floydWarshall.calculate(graph));
+        assertNull(floydWarshall.calculate(graph));
     }
 
     @Test
