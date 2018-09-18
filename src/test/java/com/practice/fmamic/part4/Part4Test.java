@@ -5,8 +5,11 @@ import static junit.framework.TestCase.assertNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import com.practice.fmamic.data.structure.City;
 import org.junit.Test;
 
 public class Part4Test {
@@ -147,6 +150,39 @@ public class Part4Test {
         final FloydWarshall floydWarshall = new FloydWarshall();
 
         assertEquals(-19L, (long) floydWarshall.calculate(graph));
+    }
+
+    @Test
+    public void travelingSalesmanTest1() {
+        final TravelingSalesman tsp = new TravelingSalesman();
+        List<City> cities = parseInputTsp("tsp.txt");
+        assertEquals(1.0, tsp.tspMinimumDistanceDP(cities, cities.get(0)));
+    }
+
+    @Test
+    public void travelingSalesmanTest2() {
+        final TravelingSalesman tsp = new TravelingSalesman();
+        List<City> cities = parseInputTsp("tsp2.txt");
+        assertEquals(40.0, tsp.tspMinimumDistanceNaive(cities, cities.get(0)));
+    }
+
+    private List<City> parseInputTsp(final String fileName) {
+        final File file = new File(getClass().getClassLoader().getResource(fileName).getFile());
+        final List<City> cities = new ArrayList<>();
+
+        try (final Scanner scanner = new Scanner(file)) {
+            scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                final String[] line = scanner.nextLine().split(" ");
+                final City city = new City(Double.parseDouble(line[0]), Double.parseDouble(line[1]));
+                cities.add(city);
+            }
+
+        } catch (final IOException exception) {
+            exception.printStackTrace();
+        }
+
+        return cities;
     }
 
     private Graph parseInput(final String fileName) {
