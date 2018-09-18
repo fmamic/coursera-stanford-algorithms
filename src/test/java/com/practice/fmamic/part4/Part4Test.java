@@ -156,7 +156,7 @@ public class Part4Test {
     public void travelingSalesmanTest1() {
         final TravelingSalesman tsp = new TravelingSalesman();
         List<City> cities = parseInputTsp("tsp.txt");
-        assertEquals(1.0, tsp.tspMinimumDistanceDP(cities, cities.get(0)));
+        assertEquals(1.0, tsp.tspMinimumDistanceDP(cities));
     }
 
     @Test

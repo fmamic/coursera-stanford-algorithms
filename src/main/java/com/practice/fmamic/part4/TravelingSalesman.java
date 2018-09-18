@@ -8,9 +8,28 @@ import com.practice.fmamic.data.structure.City;
 
 class TravelingSalesman {
 
-    Double tspMinimumDistanceDP(final List<City> cities, final City root) {
+
+    Double tspMinimumDistanceDP(final List<City> cities) {
+
+        double[][] distance = generateDistanceMatrix(cities);
+
+
 
         return 0d;
+    }
+
+    private double[][] generateDistanceMatrix(final List<City> cities) {
+
+        double[][] result = new double[cities.size()][cities.size()];
+
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[0].length; j++) {
+                if (i != j)
+                    result[i][j] = calculateDistance(cities.get(i), cities.get(j));
+            }
+        }
+
+        return result;
     }
 
     Double tspMinimumDistanceNaive(final List<City> cities, final City root) {
@@ -28,7 +47,7 @@ class TravelingSalesman {
         for (final City city : cities) {
             if (!visited.contains(city)) {
                 visited.add(city);
-                minimum = Math.min(minimum, tspMinimumDistanceNaiveRec(cities, visited, city, origin,calculateDistance(city, last) + current));
+                minimum = Math.min(minimum, tspMinimumDistanceNaiveRec(cities, visited, city, origin, calculateDistance(city, last) + current));
                 visited.remove(city);
             }
         }
