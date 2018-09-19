@@ -1,7 +1,6 @@
 package com.practice.fmamic.part4;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -129,20 +128,20 @@ class TravelingSalesman {
         return allSets;
     }
 
-    public static Set<Integer> bitprint(int u) {
+    private static Set<Integer> bitprint(int u) {
         Set<Integer> set = new HashSet<>();
         for (int n = 0; u > 0; ++n, u >>= 1)
             if ((u & 1) > 0) set.add(n);
         return set;
     }
 
-    public static int bitcount(int u) {
+    private static int bitcount(int u) {
         int n;
         for (n = 0; u > 0; ++n, u &= (u - 1)) ;//Turn the last set bit to a 0
         return n;
     }
 
-    public List<Set<Integer>> comb(int c, int n) {
+    List<Set<Integer>> comb(int c, int n) {
         final LinkedList<Set<Integer>> s = new LinkedList<>();
 
         for (int u = 1; u < 1 << n; u++) {
