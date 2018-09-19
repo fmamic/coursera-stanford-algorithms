@@ -6,8 +6,10 @@ import static junit.framework.TestCase.assertNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.practice.fmamic.data.structure.City;
 import org.junit.Test;
@@ -153,10 +155,29 @@ public class Part4Test {
     }
 
     @Test
-    public void travelingSalesmanTest1() {
+    public void travelingSalesmanTest5() {
         final TravelingSalesman tsp = new TravelingSalesman();
-        List<City> cities = parseInputTsp("tsp.txt");
-        assertEquals(1.0, tsp.tspMinimumDistanceDP(cities));
+        List<City> cities = parseInputTsp("tsp4.txt");
+        assertEquals(14409.202165641733, tsp.tspMinimumDistanceDP(generateDistanceMatrix(cities)));
+    }
+
+    @Test
+    public void travelingSalesmanTest6() {
+        final TravelingSalesman tsp = new TravelingSalesman();
+        List<City> cities = parseInputTsp("tsp3.txt");
+        assertEquals(14662.0046407879, tsp.tspMinimumDistanceDP(generateDistanceMatrix(cities)));
+    }
+
+    @Test
+    public void result() {
+        assertEquals(26442.730308954753, 14409.202165641733 + 14662.0046407879 - 2 * 1314.2382487374398);
+    }
+
+    @Test
+    public void travelingSalesmanTest3() {
+        final TravelingSalesman tsp = new TravelingSalesman();
+        List<City> cities = parseInputTsp("tsp2.txt");
+        assertEquals(40.0, tsp.tspMinimumDistanceDP(generateDistanceMatrix(cities)));
     }
 
     @Test
@@ -164,6 +185,73 @@ public class Part4Test {
         final TravelingSalesman tsp = new TravelingSalesman();
         List<City> cities = parseInputTsp("tsp2.txt");
         assertEquals(40.0, tsp.tspMinimumDistanceNaive(cities, cities.get(0)));
+    }
+
+    @Test
+    public void generateCombinations() {
+        final TravelingSalesman travelingSalesman = new TravelingSalesman();
+        final Set<Set<Integer>> result = new HashSet<>();
+
+        travelingSalesman.generateCombinations(3, result, new ArrayList<>());
+
+        assertEquals(4, result.size());
+    }
+
+    @Test
+    public void generateCombinations2() {
+        final TravelingSalesman travelingSalesman = new TravelingSalesman();
+        List<Set<Integer>> result = travelingSalesman.generateCombination(3);
+
+        assertEquals(7, result.size());
+    }
+
+    @Test
+    public void generateCombinations3() {
+        final TravelingSalesman travelingSalesman = new TravelingSalesman();
+        final List<Set<Integer>> result = new ArrayList<>();
+
+        for (int i = 1; i < 4; i++) {
+            result.addAll(travelingSalesman.comb(i, 4));
+        }
+
+        assertEquals(7, result.size());
+    }
+
+    @Test
+    public void generateCombinations4() {
+        final TravelingSalesman travelingSalesman = new TravelingSalesman();
+        final List<Set<Integer>> result = new ArrayList<>();
+
+        for (int i = 1; i < 4; i++) {
+            result.addAll(travelingSalesman.comb(i, 4));
+        }
+
+        assertEquals(7, result.size());
+    }
+
+    @Test
+    public void calculateDistance4() {
+        final City city1 = new City(23883.3333, 14533.3333);
+        final City city2 = new City(24166.6667, 13250.0000);
+        assertEquals(1314.2382487374398, calculateDistance(city1, city2));
+    }
+
+    private double[][] generateDistanceMatrix(final List<City> cities) {
+
+        double[][] result = new double[cities.size()][cities.size()];
+
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[0].length; j++) {
+                if (i != j)
+                    result[i][j] = calculateDistance(cities.get(i), cities.get(j));
+            }
+        }
+
+        return result;
+    }
+
+    private double calculateDistance(City city1, City city2) {
+        return Math.sqrt(Math.pow(city1.getX() - city2.getX(), 2) + Math.pow(city1.getY() - city2.getY(), 2));
     }
 
     private List<City> parseInputTsp(final String fileName) {
