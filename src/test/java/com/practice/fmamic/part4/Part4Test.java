@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -236,6 +237,46 @@ public class Part4Test {
         assertEquals(1314.2382487374398, calculateDistance(city1, city2));
     }
 
+    @Test
+    public void calculateTspApp() {
+        List<City> cities = parseInputTspApp("tsp_app5.txt");
+        TravelingSalesmanApproximation approximation = new TravelingSalesmanApproximation();
+
+        assertEquals(188129.0, approximation.tspMinimumDistanceApproximation(cities));
+    }
+
+    @Test
+    public void calculateTspApp5() {
+        List<City> cities = parseInputTspApp("tsp_app.txt");
+        TravelingSalesmanApproximation approximation = new TravelingSalesmanApproximation();
+
+        assertEquals(1203406.0, approximation.tspMinimumDistanceApproximation(cities));
+    }
+
+    @Test
+    public void calculateTspApp4() {
+        List<City> cities = parseInputTspApp("tsp_app4.txt");
+        TravelingSalesmanApproximation approximation = new TravelingSalesmanApproximation();
+
+        assertEquals(2470.0, approximation.tspMinimumDistanceApproximation(cities));
+    }
+
+    @Test
+    public void calculateTspApp2() {
+        List<City> cities = parseInputTspApp("tsp_app2.txt");
+        TravelingSalesmanApproximation approximation = new TravelingSalesmanApproximation();
+
+        assertEquals(48581.0, approximation.tspMinimumDistanceApproximation(cities));
+    }
+
+    @Test
+    public void calculateTspApp3() {
+        List<City> cities = parseInputTspApp("tsp_app3.txt");
+        TravelingSalesmanApproximation approximation = new TravelingSalesmanApproximation();
+
+        assertEquals(15.0, approximation.tspMinimumDistanceApproximation(cities));
+    }
+
     private double[][] generateDistanceMatrix(final List<City> cities) {
 
         double[][] result = new double[cities.size()][cities.size()];
@@ -252,6 +293,25 @@ public class Part4Test {
 
     private double calculateDistance(City city1, City city2) {
         return Math.sqrt(Math.pow(city1.getX() - city2.getX(), 2) + Math.pow(city1.getY() - city2.getY(), 2));
+    }
+
+    private List<City> parseInputTspApp(final String fileName) {
+        final File file = new File(getClass().getClassLoader().getResource(fileName).getFile());
+        final List<City> cities = new ArrayList<>();
+
+        try (final Scanner scanner = new Scanner(file)) {
+            scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                final String[] line = scanner.nextLine().split(" ");
+                final City city = new City(Double.parseDouble(line[1]), Double.parseDouble(line[2]));
+                cities.add(city);
+            }
+
+        } catch (final IOException exception) {
+            exception.printStackTrace();
+        }
+
+        return cities;
     }
 
     private List<City> parseInputTsp(final String fileName) {
