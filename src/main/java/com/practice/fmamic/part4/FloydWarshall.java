@@ -2,6 +2,8 @@ package com.practice.fmamic.part4;
 
 import java.util.Arrays;
 
+import com.practice.fmamic.part4.data.Graph;
+
 class FloydWarshall {
 
     Long calculate(final Graph graph) {

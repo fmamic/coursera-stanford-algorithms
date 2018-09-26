@@ -1,18 +1,18 @@
 package com.practice.fmamic.part4;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 import com.practice.fmamic.data.structure.City;
+import com.practice.fmamic.data.structure.Vertex;
+import com.practice.fmamic.part4.data.Graph;
 import org.junit.Test;
 
 public class Part4Test {
@@ -275,6 +275,72 @@ public class Part4Test {
         TravelingSalesmanApproximation approximation = new TravelingSalesmanApproximation();
 
         assertEquals(15.0, approximation.tspMinimumDistanceApproximation(cities));
+    }
+
+    @Test
+    public void twoSatTest1() {
+        final List<TwoSat.Clause> clauses1 = parseTwoSatInput("2sat1.txt");
+        final List<TwoSat.Clause> clauses2 = parseTwoSatInput("2sat2.txt");
+        final List<TwoSat.Clause> clauses3 = parseTwoSatInput("2sat3.txt");
+        final List<TwoSat.Clause> clauses4 = parseTwoSatInput("2sat4.txt");
+        final List<TwoSat.Clause> clauses5 = parseTwoSatInput("2sat5.txt");
+        final List<TwoSat.Clause> clauses6 = parseTwoSatInput("2sat6.txt");
+        final List<TwoSat.Clause> clauses7 = parseTwoSatInput("2satSmall.txt");
+
+        final TwoSat twoSat = new TwoSat();
+
+        assertTrue(twoSat.satisfiability(clauses1)); // 1
+        assertTrue(!twoSat.satisfiability(clauses2)); // 0
+        assertTrue(twoSat.satisfiability(clauses3)); // 1
+        assertTrue(twoSat.satisfiability(clauses4)); // 1
+        assertTrue(!twoSat.satisfiability(clauses5)); // 0
+        assertTrue(!twoSat.satisfiability(clauses6)); // 0
+        assertTrue(!twoSat.satisfiability(clauses7));
+    }
+
+    @Test
+    public void twoSatFilterClauses() {
+        final List<TwoSat.Clause> clauses1 = parseTwoSatInput("2sat1.txt");
+        final List<TwoSat.Clause> clauses2 = parseTwoSatInput("2sat2.txt");
+        final List<TwoSat.Clause> clauses3 = parseTwoSatInput("2sat3.txt");
+        final List<TwoSat.Clause> clauses4 = parseTwoSatInput("2sat4.txt");
+        final List<TwoSat.Clause> clauses5 = parseTwoSatInput("2sat5.txt");
+        final List<TwoSat.Clause> clauses6 = parseTwoSatInput("2sat6.txt");
+
+        final TwoSat twoSat = new TwoSat();
+
+        assertEquals(6, twoSat.filterClauses(clauses1));
+        assertEquals(57, twoSat.filterClauses(clauses2));
+        assertEquals(295, twoSat.filterClauses(clauses3));
+        assertEquals(11, twoSat.filterClauses(clauses4));
+        assertEquals(101, twoSat.filterClauses(clauses5));
+        assertEquals(26, twoSat.filterClauses(clauses6));
+    }
+
+    private List<TwoSat.Clause> parseTwoSatInput(final String fileName) {
+        final File file = new File(getClass().getClassLoader().getResource(fileName).getFile());
+        final List<TwoSat.Clause> clauses = new ArrayList<>();
+
+        try (final Scanner scanner = new Scanner(file)) {
+            scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] data = line.split(" ");
+
+                final TwoSat.Clause clause = new TwoSat.Clause();
+
+                clause.a = Integer.valueOf(data[0]);
+                clause.b = Integer.valueOf(data[1]);
+
+                clause.result = clause.a >= 0 || clause.b >= 0;
+
+                clauses.add(clause);
+            }
+        } catch (final IOException exception) {
+            exception.printStackTrace();
+        }
+
+        return clauses;
     }
 
     private double[][] generateDistanceMatrix(final List<City> cities) {

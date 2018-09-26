@@ -2,6 +2,8 @@ package com.practice.fmamic.part4;
 
 import java.util.Arrays;
 
+import com.practice.fmamic.part4.data.Graph;
+
 class BellmanFord {
 
     // O(n^2) space O(n*m) time
